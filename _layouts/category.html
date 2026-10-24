@@ -2,22 +2,32 @@
 layout: default
 ---
 
-<section class="archive-page">
-  <header class="archive-header">
+<section class="category-page">
+  <header class="category-header">
+    <nav class="breadcrumbs" aria-label="مسیر صفحه">
+      <a href="{{ '/' | relative_url }}">خانه</a>
+      <span class="breadcrumb-separator">←</span>
+      <span aria-current="page">{{ page.category }}</span>
+    </nav>
+
     <p class="archive-label">دسته‌بندی</p>
     <h1>{{ page.category }}</h1>
 
-    <p>
-      همهٔ نوشته‌های منتشرشده در دستهٔ «{{ page.category }}».
-    </p>
+    {% if page.description %}
+      <p>{{ page.description }}</p>
+    {% else %}
+      <p>
+        همهٔ نوشته‌های منتشرشده در دستهٔ «{{ page.category }}».
+      </p>
+    {% endif %}
   </header>
 
-  <div class="archive-list">
+  <div class="category-post-list">
     {% assign category_posts = site.categories[page.category] %}
 
     {% if category_posts and category_posts.size > 0 %}
       {% for post in category_posts %}
-        <article class="archive-card">
+        <article class="post-card">
           <p class="post-meta">
             {{ post.date | date: "%Y/%m/%d" }}
           </p>
