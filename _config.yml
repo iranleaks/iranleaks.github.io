@@ -5,7 +5,7 @@ baseurl: ""
 
 lang: fa
 direction: rtl
-timezone: Europe/Rome
+timezone: Asia/Tehran
 
 markdown: kramdown
 highlighter: rouge
