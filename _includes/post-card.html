@@ -11,7 +11,7 @@
     {% if post.tags.size > 0 %}
     <div class="mb-2">
       {% for tag in post.tags limit: 3 %}
-      <a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}"
+      <a href="{{ '/blog/' | relative_url }}#{{ tag | slugify }}"
          class="badge bg-secondary text-decoration-none">{{ tag }}</a>
       {% endfor %}
     </div>
@@ -29,8 +29,11 @@
   </div>
 
   <div class="card-footer bg-white border-0 text-muted small d-flex justify-content-between align-items-center">
-    <span><i class="bi bi-calendar3"></i>
-      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y/%m/%d" }}</time>
+    <span>
+      <i class="bi bi-calendar3"></i>
+      <time datetime="{{ post.date | date_to_xmlschema }}">
+        {{ post.date | date: "%Y/%m/%d" }}
+      </time>
     </span>
     <span class="text-primary">ادامه <i class="bi bi-arrow-left"></i></span>
   </div>
