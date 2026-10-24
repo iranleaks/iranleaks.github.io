@@ -25,6 +25,27 @@ breadcrumb: true
 <script>
 (function () {
   'use strict';
+
+  var persianMonths = ['ژانویه','فوریه','مارس','آوریل','مه','ژوئن','ژوئیه','اوت','سپتامبر','اکتبر','نوامبر','دسامبر'];
+  var persianDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+
+  function faNum(n) {
+    return String(n).split('').map(function (c) {
+      var d = parseInt(c, 10);
+      return isNaN(d) ? c : persianDigits[d];
+    }).join('');
+  }
+
+  function toFaDate(isoString) {
+    if (!isoString) return '';
+    var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(isoString);
+    if (!m) return isoString;
+    var year = parseInt(m[1], 10);
+    var month = parseInt(m[2], 10) - 1;
+    var day = parseInt(m[3], 10);
+    return faNum(day) + ' ' + (persianMonths[month] || '') + ' ' + faNum(year);
+  }
+
   document.addEventListener('DOMContentLoaded', async function () {
     var input = document.getElementById('search-input');
     var results = document.getElementById('search-results');
@@ -67,7 +88,7 @@ breadcrumb: true
           '<p class="small text-muted mb-0">' + esc(p.excerpt) + '</p>' +
           '</div>' +
           '<div class="card-footer bg-white border-0 small text-muted">' +
-            '<time datetime="' + esc(p.date) + '">' + esc(p.date_formatted) + '</time>' +
+            '<time datetime="' + esc(p.date) + '">' + esc(toFaDate(p.date)) + '</time>' +
           '</div>' +
           '</article></div>';
       }).join('');
