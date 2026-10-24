@@ -1,0 +1,54 @@
+<a href="#main-content" class="visually-hidden-focusable">پرش به محتوا</a>
+
+<header class="site-header sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="ناوبری اصلی">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="{{ '/' | relative_url }}">
+        <img src="{{ site.logo | relative_url }}" alt="لوگوی {{ site.title }}" width="36" height="36" class="me-2" loading="eager">
+        <span class="fw-bold">{{ site.title }}</span>
+      </a>
+
+      <button class="navbar-toggler" type="button"
+              data-bs-toggle="collapse" data-bs-target="#mainNav"
+              aria-controls="mainNav" aria-expanded="false"
+              aria-label="تغییر وضعیت ناوبری">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link {% if page.url == '/' %}active{% endif %}" href="{{ '/' | relative_url }}">
+              <i class="bi bi-house-door"></i> خانه
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if page.url contains '/blog' %}active{% endif %}" href="{{ '/blog/' | relative_url }}">
+              <i class="bi bi-journal-text"></i> وبلاگ
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if page.url contains '/tags' %}active{% endif %}" href="{{ '/tags/' | relative_url }}">
+              <i class="bi bi-tags"></i> برچسب‌ها
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if page.url contains '/about' %}active{% endif %}" href="{{ '/about/' | relative_url }}">
+              <i class="bi bi-info-circle"></i> درباره
+            </a>
+          </li>
+        </ul>
+
+        <form class="d-flex ms-lg-3 mt-2 mt-lg-0" role="search"
+              action="{{ '/search/' | relative_url }}" method="get">
+          <label for="search-input-header" class="visually-hidden">جستجو</label>
+          <input class="form-control form-control-sm" type="search" name="q"
+                 id="search-input-header" placeholder="جستجو..." aria-label="جستجو">
+          <button class="btn btn-outline-light btn-sm ms-2" type="submit" aria-label="ارسال جستجو">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</header>
