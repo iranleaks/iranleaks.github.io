@@ -1,7 +1,6 @@
 <footer class="site-footer bg-dark text-light mt-5 py-4">
   <div class="container text-center">
 
-    <!-- لوگو -->
     <div class="footer-logo mb-3">
       <a href="{{ '/' | relative_url }}" aria-label="{{ site.title }}">
         <img src="{{ site.logo | relative_url }}" alt="{{ site.title }}"
@@ -9,7 +8,6 @@
       </a>
     </div>
 
-    <!-- لینک‌های دسترسی -->
     <nav class="mb-3" aria-label="لینک‌های فوتر">
       <ul class="list-inline mb-0 footer-links">
         <li class="list-inline-item">
@@ -22,7 +20,7 @@
           <a href="{{ '/about/' | relative_url }}">درباره</a>
         </li>
         <li class="list-inline-item">
-          <a href="{{ '/rss.xml' | relative_url }}">RSS</a>
+          <a href="{{ '/rss/' | relative_url }}">RSS</a>
         </li>
         <li class="list-inline-item">
           <a href="{{ '/sitemap.xml' | relative_url }}">نقشه سایت</a>
@@ -30,7 +28,6 @@
       </ul>
     </nav>
 
-    <!-- دکمه‌های شبکه‌های اجتماعی -->
     {% if site.social.instagram or site.social.x or site.social.facebook or site.social.youtube or site.social.linkedin %}
     <div class="footer-social" aria-label="شبکه‌های اجتماعی">
       {% if site.social.instagram and site.social.instagram != "" %}
