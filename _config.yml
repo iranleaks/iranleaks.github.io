@@ -1,16 +1,18 @@
 title: ایران‌لیکس
-description:  اینجا نوشته‌ها، تحلیل‌ها و منابعی درباره موضوعات سیاسی،
-    اجتماعی، رسانه‌ای منتشر می‌شه.
+description: وبلاگ فارسی درباره سیاست، فناوری، جامعه و رسانه
 url: "https://iranleaks.github.io"
 baseurl: ""
 
 lang: fa
 direction: rtl
-timezone: Asia/Tehran
+timezone: Europe/Rome
 
 markdown: kramdown
 highlighter: rouge
 permalink: /:categories/:title/
+
+category_dir: categories
+tag_dir: tags
 
 author:
   name: ایران‌لیکس
