@@ -28,7 +28,12 @@ social:
 # ============================================
 markdown: kramdown
 highlighter: rouge
-permalink: /:year/:month/:day/:title/
+
+# آدرس پست‌ها: /tag/title/
+# مهم: در هر پست حتماً categories را برابر تگ اصلی بگذارید
+#   categories: [امنیت]
+permalink: /:categories/:title/
+
 timezone: Asia/Tehran
 
 kramdown:
@@ -45,8 +50,9 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
 
+# فید RSS در /rss.xml
 feed:
-  path: feed.xml
+  path: rss.xml
   posts_limit: 20
 
 # ============================================
