@@ -1,88 +1,49 @@
 ---
 layout: default
 ---
+<section class="hero bg-primary text-white py-5 mb-5">
+  <div class="container text-center py-3">
+    <img src="{{ site.logo | relative_url }}" alt="لوگوی {{ site.title }}"
+         width="80" height="80" class="mb-3" loading="eager">
+    <h1 class="display-4 fw-bold mb-3">{{ site.title }}</h1>
+    <p class="lead mb-4">{{ site.description }}</p>
+    <a href="{{ '/blog/' | relative_url }}" class="btn btn-light btn-lg">
+      <i class="bi bi-journal-text"></i> مشاهده وبلاگ
+    </a>
+  </div>
+</section>
 
-<article class="post">
-  <header class="post-header">
-    <p class="post-meta">
-      {{ page.date | date: "%Y/%m/%d" }}
-    </p>
+<div class="container">
+  <h2 class="mb-4 border-bottom pb-2">
+    <i class="bi bi-stars"></i> آخرین مطالب
+  </h2>
 
-    <h1>{{ page.title }}</h1>
-
-    {% if page.description %}
-      <p class="post-description">
-        {{ page.description }}
-      </p>
-    {% endif %}
-  </header>
-
-  {% if page.categories %}
-    <nav class="breadcrumbs" aria-label="مسیر صفحه">
-      <a href="{{ '/' | relative_url }}">خانه</a>
-
-      <span class="breadcrumb-separator">←</span>
-
-      {% for category in page.categories %}
-        <a href="{{ '/categories/' | append: category | slugify | append: '/' | relative_url }}">
-          {{ category }}
-        </a>
-
-        {% unless forloop.last %}
-          <span class="breadcrumb-separator">←</span>
-        {% endunless %}
-      {% endfor %}
-
-      <span class="breadcrumb-separator">←</span>
-      <span aria-current="page">{{ page.title }}</span>
-    </nav>
-  {% endif %}
-
-  <div class="post-content">
-    {{ content }}
+  {% assign all_posts = site.posts %}
+  {% if all_posts and all_posts.size > 0 %}
+  <div class="row g-4">
+    {% for post in all_posts limit: 6 %}
+    <div class="col-md-6 col-lg-4">
+      {% include post-card.html post=post %}
+    </div>
+    {% endfor %}
   </div>
 
-  {% assign related_posts = "" | split: "" %}
-
-  {% for current_tag in page.tags %}
-    {% assign posts_with_same_tag = site.tags[current_tag] %}
-
-    {% for candidate_post in posts_with_same_tag %}
-      {% unless candidate_post.url == page.url %}
-        {% unless related_posts contains candidate_post %}
-          {% assign related_posts = related_posts | push: candidate_post %}
-        {% endunless %}
-      {% endunless %}
-    {% endfor %}
-  {% endfor %}
-
-  {% if related_posts.size > 0 %}
-    <section class="related-posts">
-      <h2>نوشته‌های مرتبط</h2>
-
-      <div class="related-posts-list">
-        {% for related_post in related_posts limit:6 %}
-          <article class="related-post-card">
-            <p class="post-meta">
-              {{ related_post.date | date: "%Y/%m/%d" }}
-            </p>
-
-            <h3>
-              <a href="{{ related_post.url | relative_url }}">
-                {{ related_post.title }}
-              </a>
-            </h3>
-
-            {% if related_post.description %}
-              <p>{{ related_post.description }}</p>
-            {% else %}
-              <p>
-                {{ related_post.excerpt | strip_html | strip_newlines | truncate: 150 }}
-              </p>
-            {% endif %}
-          </article>
-        {% endfor %}
-      </div>
-    </section>
+  <div class="text-center my-5">
+    <a href="{{ '/blog/' | relative_url }}" class="btn btn-outline-primary btn-lg">
+      همه مطالب <i class="bi bi-arrow-left"></i>
+    </a>
+  </div>
+  {% else %}
+  <div class="alert alert-warning">
+    <h5 class="alert-heading"><i class="bi bi-exclamation-triangle"></i> هیچ نوشته‌ای یافت نشد</h5>
+    <p class="mb-2">اگر قبلاً نوشته ساخته‌اید، این موارد را بررسی کنید:</p>
+    <ul class="mb-0 small">
+      <li>فایل باید داخل پوشهٔ <code>_posts/</code> باشد (با زیرخط در ابتدا).</li>
+      <li>نام فایل باید دقیقاً به شکل <code>YYYY-MM-DD-name.md</code> باشد.</li>
+      <li>در front matter مقدار <code>published: false</code> نباشد.</li>
+      <li>تاریخ نوشته نباید در آینده باشد.</li>
+      <li>در front matter از <code>---</code> (سه خط تیره) استفاده شده باشد.</li>
+    </ul>
+  </div>
   {% endif %}
-</article>
+</div>
