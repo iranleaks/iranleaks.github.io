@@ -1,39 +1,74 @@
 <footer class="site-footer bg-dark text-light mt-5 py-4">
-  <div class="container">
-    <div class="row g-4">
-      <div class="col-md-4">
-        <h5 class="fw-bold d-flex align-items-center">
-          <img src="{{ site.logo | relative_url }}" alt="" width="48" height="48" class="me-2">
-          {{ site.title }}
-        </h5>
-        <p class="text-secondary small mb-0">{{ site.description }}</p>
-      </div>
+  <div class="container text-center">
 
-      <div class="col-md-4">
-        <h6 class="fw-bold">دسترسی سریع</h6>
-        <ul class="list-unstyled small">
-          <li class="mb-1"><a href="{{ '/' | relative_url }}" class="link-light text-decoration-none"><i class="bi bi-chevron-left"></i> خانه</a></li>
-          <li class="mb-1"><a href="{{ '/blog/' | relative_url }}" class="link-light text-decoration-none"><i class="bi bi-chevron-left"></i> وبلاگ</a></li>
-          <li class="mb-1"><a href="{{ '/about/' | relative_url }}" class="link-light text-decoration-none"><i class="bi bi-chevron-left"></i> درباره ما</a></li>
-          <li class="mb-1"><a href="{{ '/rss/' | relative_url }}" class="link-light text-decoration-none"><i class="bi bi-rss"></i> خوراک RSS</a></li>
-          <li class="mb-1"><a href="{{ '/sitemap.xml' | relative_url }}" class="link-light text-decoration-none"><i class="bi bi-diagram-3"></i> نقشه سایت</a></li>
-        </ul>
-      </div>
-
-      <div class="col-md-4">
-        <h6 class="fw-bold">تماس</h6>
-        <p class="small text-secondary mb-1">
-          <i class="bi bi-envelope"></i> {{ site.author.email }}
-        </p>
-        <p class="small text-secondary">
-          <i class="bi bi-globe"></i> {{ site.url }}
-        </p>
-      </div>
+    <!-- لوگو -->
+    <div class="footer-logo mb-3">
+      <a href="{{ '/' | relative_url }}" aria-label="{{ site.title }}">
+        <img src="{{ site.logo | relative_url }}" alt="{{ site.title }}"
+             width="64" height="64" loading="lazy">
+      </a>
     </div>
 
-    <hr class="border-secondary">
-    <div class="text-center small text-secondary">
-      &copy; {{ site.time | date: '%Y' }} {{ site.title }} — تمامی حقوق محفوظ است.
+    <!-- لینک‌های دسترسی -->
+    <nav class="mb-3" aria-label="لینک‌های فوتر">
+      <ul class="list-inline mb-0 footer-links">
+        <li class="list-inline-item">
+          <a href="{{ '/' | relative_url }}">خانه</a>
+        </li>
+        <li class="list-inline-item">
+          <a href="{{ '/blog/' | relative_url }}">وبلاگ</a>
+        </li>
+        <li class="list-inline-item">
+          <a href="{{ '/about/' | relative_url }}">درباره</a>
+        </li>
+        <li class="list-inline-item">
+          <a href="{{ '/rss.xml' | relative_url }}">RSS</a>
+        </li>
+        <li class="list-inline-item">
+          <a href="{{ '/sitemap.xml' | relative_url }}">نقشه سایت</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- دکمه‌های شبکه‌های اجتماعی -->
+    {% if site.social.instagram or site.social.x or site.social.facebook or site.social.youtube or site.social.linkedin %}
+    <div class="footer-social" aria-label="شبکه‌های اجتماعی">
+      {% if site.social.instagram and site.social.instagram != "" %}
+      <a href="{{ site.social.instagram }}" target="_blank" rel="noopener noreferrer me"
+         aria-label="اینستاگرام" title="اینستاگرام">
+        <i class="bi bi-instagram" aria-hidden="true"></i>
+      </a>
+      {% endif %}
+
+      {% if site.social.x and site.social.x != "" %}
+      <a href="{{ site.social.x }}" target="_blank" rel="noopener noreferrer me"
+         aria-label="ایکس (توییتر)" title="ایکس">
+        <i class="bi bi-twitter-x" aria-hidden="true"></i>
+      </a>
+      {% endif %}
+
+      {% if site.social.facebook and site.social.facebook != "" %}
+      <a href="{{ site.social.facebook }}" target="_blank" rel="noopener noreferrer me"
+         aria-label="فیسبوک" title="فیسبوک">
+        <i class="bi bi-facebook" aria-hidden="true"></i>
+      </a>
+      {% endif %}
+
+      {% if site.social.youtube and site.social.youtube != "" %}
+      <a href="{{ site.social.youtube }}" target="_blank" rel="noopener noreferrer me"
+         aria-label="یوتیوب" title="یوتیوب">
+        <i class="bi bi-youtube" aria-hidden="true"></i>
+      </a>
+      {% endif %}
+
+      {% if site.social.linkedin and site.social.linkedin != "" %}
+      <a href="{{ site.social.linkedin }}" target="_blank" rel="noopener noreferrer me"
+         aria-label="لینکدین" title="لینکدین">
+        <i class="bi bi-linkedin" aria-hidden="true"></i>
+      </a>
+      {% endif %}
     </div>
+    {% endif %}
+
   </div>
 </footer>
