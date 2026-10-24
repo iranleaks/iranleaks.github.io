@@ -1,0 +1,48 @@
+---
+layout: default
+---
+
+<section class="archive-page">
+  <header class="archive-header">
+    <p class="archive-label">دسته‌بندی</p>
+    <h1>{{ page.category }}</h1>
+
+    <p>
+      همهٔ نوشته‌های منتشرشده در دستهٔ «{{ page.category }}».
+    </p>
+  </header>
+
+  <div class="archive-list">
+    {% assign category_posts = site.categories[page.category] %}
+
+    {% if category_posts and category_posts.size > 0 %}
+      {% for post in category_posts %}
+        <article class="archive-card">
+          <p class="post-meta">
+            {{ post.date | date: "%Y/%m/%d" }}
+          </p>
+
+          <h2>
+            <a href="{{ post.url | relative_url }}">
+              {{ post.title }}
+            </a>
+          </h2>
+
+          {% if post.description %}
+            <p>{{ post.description }}</p>
+          {% else %}
+            <p>
+              {{ post.excerpt | strip_html | strip_newlines | truncate: 180 }}
+            </p>
+          {% endif %}
+
+          <a class="read-more" href="{{ post.url | relative_url }}">
+            ادامهٔ مطلب
+          </a>
+        </article>
+      {% endfor %}
+    {% else %}
+      <p>در این دسته هنوز نوشته‌ای منتشر نشده است.</p>
+    {% endif %}
+  </div>
+</section>
