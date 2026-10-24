@@ -1,36 +1,77 @@
-title: ایران‌لیکس
-description: وبلاگ فارسی درباره سیاست، فناوری، جامعه و رسانه
+# ============================================
+# تنظیمات اصلی سایت
+# ============================================
+title: "ایران لیکس"
+description: "وبلاگ ایران لیکس — تحلیل، بررسی و اخبار فناوری، امنیت و حریم خصوصی"
 url: "https://iranleaks.github.io"
 baseurl: ""
-
 lang: fa
-direction: rtl
-timezone: Europe/Rome
+dir: rtl
 
+# نویسنده
+author:
+  name: "Iran Leaks"
+  email: "info@iranleaks.github.io"
+
+# لوگو و فاویکون
+logo: "/blog.svg"
+favicon: "/blog.svg"
+
+# شبکه‌های اجتماعی
+social:
+  name: "Iran Leaks"
+  links:
+    - "https://iranleaks.github.io"
+
+# ============================================
+# تنظیمات ساخت
+# ============================================
 markdown: kramdown
 highlighter: rouge
-permalink: /:categories/:title/
+permalink: /:year/:month/:day/:title/
+timezone: Asia/Tehran
 
-category_dir: categories
-tag_dir: tags
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  auto_ids: true
+  toc_levels: 1..3
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
 
-author:
-  name: ایران‌لیکس
-  email: ""
-
+# ============================================
+# افزونه‌ها (سازگار با GitHub Pages)
+# ============================================
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
 
 feed:
-  path: /feed.xml
+  path: feed.xml
+  posts_limit: 20
 
+# ============================================
+# پیش‌فرض‌ها
+# ============================================
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      comments: false
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+
+# ============================================
+# موارد مستثنی
+# ============================================
 exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
-  - node_modules
   - vendor
+  - node_modules
   - .bundle
-  - .jekyll-cache
-  - .sass-cache
-  - _site
