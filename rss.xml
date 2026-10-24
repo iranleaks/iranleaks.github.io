@@ -17,7 +17,7 @@ sitemap: false
     <email>{{ site.author.email | xml_escape }}</email>
   </author>
   <rights>© {{ site.time | date: '%Y' }} {{ site.title | xml_escape }}</rights>
-  <generator uri="https://jekyllrb.com/">Jekyll</generator>
+  <generator uri="https://blunder.ir/">blunder</generator>
   {% for post in site.posts limit: 20 %}
   <entry>
     <title type="text">{{ post.title | xml_escape }}</title>
