@@ -1,0 +1,23 @@
+{%- assign day   = include.date | date: "%-d" -%}
+{%- assign month = include.date | date: "%-m" -%}
+{%- assign year  = include.date | date: "%Y" -%}
+
+{%- case month -%}
+{%- when "1"  -%}{%- assign month_fa = "ژانویه" -%}
+{%- when "2"  -%}{%- assign month_fa = "فوریه" -%}
+{%- when "3"  -%}{%- assign month_fa = "مارس" -%}
+{%- when "4"  -%}{%- assign month_fa = "آوریل" -%}
+{%- when "5"  -%}{%- assign month_fa = "مه" -%}
+{%- when "6"  -%}{%- assign month_fa = "ژوئن" -%}
+{%- when "7"  -%}{%- assign month_fa = "ژوئیه" -%}
+{%- when "8"  -%}{%- assign month_fa = "اوت" -%}
+{%- when "9"  -%}{%- assign month_fa = "سپتامبر" -%}
+{%- when "10" -%}{%- assign month_fa = "اکتبر" -%}
+{%- when "11" -%}{%- assign month_fa = "نوامبر" -%}
+{%- when "12" -%}{%- assign month_fa = "دسامبر" -%}
+{%- endcase -%}
+
+{%- assign day_fa  = day  | replace: "0","۰" | replace: "1","۱" | replace: "2","۲" | replace: "3","۳" | replace: "4","۴" | replace: "5","۵" | replace: "6","۶" | replace: "7","۷" | replace: "8","۸" | replace: "9","۹" -%}
+{%- assign year_fa = year | replace: "0","۰" | replace: "1","۱" | replace: "2","۲" | replace: "3","۳" | replace: "4","۴" | replace: "5","۵" | replace: "6","۶" | replace: "7","۷" | replace: "8","۸" | replace: "9","۹" -%}
+
+{{- day_fa }} {{ month_fa }} {{ year_fa -}}
