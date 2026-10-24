@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="500" viewBox="0 0 1600 500" role="img" aria-labelledby="title desc">
+  <title id="title">blunder</title>
+  <desc id="desc">White lowercase blunder wordmark on a transparent background.</desc>
+  <text x="800" y="340"
+        text-anchor="middle"
+        fill="#ffffff"
+        font-family="Inter Display, Inter, Arial, sans-serif"
+        font-size="300"
+        font-weight="800"
+        letter-spacing="7">blunder</text>
+</svg>
