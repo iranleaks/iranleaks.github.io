@@ -13,7 +13,7 @@ layout: default
           <span>
             <i class="bi bi-calendar3"></i>
             <time datetime="{{ page.date | date_to_xmlschema }}">
-              {{ page.date | date: "%Y/%m/%d" }}
+              {% include date-fa.html date=page.date %}
             </time>
           </span>
 
@@ -22,7 +22,7 @@ layout: default
             <i class="bi bi-clock-history"></i>
             آخرین به‌روزرسانی:
             <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">
-              {{ page.last_modified_at | date: "%Y/%m/%d" }}
+              {% include date-fa.html date=page.last_modified_at %}
             </time>
           </span>
           {% endif %}
