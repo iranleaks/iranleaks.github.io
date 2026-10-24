@@ -3,17 +3,16 @@
 <header class="site-header sticky-top">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="ناوبری اصلی">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="{{ '/' | relative_url }}">
-        <img src="{{ site.logo | relative_url }}" alt="لوگوی {{ site.title }}" width="56" height="56" class="me-2" loading="eager">
-        <span class="fw-bold">{{ site.title }}</span>
-      </a>
-
       <button class="navbar-toggler" type="button"
               data-bs-toggle="collapse" data-bs-target="#mainNav"
               aria-controls="mainNav" aria-expanded="false"
               aria-label="تغییر وضعیت ناوبری">
         <span class="navbar-toggler-icon"></span>
       </button>
+
+      <a class="navbar-brand d-flex align-items-center" href="{{ '/' | relative_url }}">
+        <img src="{{ site.logo | relative_url }}" alt="{{ site.title }}" width="56" height="56" loading="eager">
+      </a>
 
       <div class="collapse navbar-collapse" id="mainNav">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
