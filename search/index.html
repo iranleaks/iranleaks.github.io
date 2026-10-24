@@ -1,0 +1,87 @@
+---
+layout: default
+title: جستجو
+description: "جستجو در مطالب وبلاگ ایران لیکس"
+permalink: /search/
+noindex: true
+breadcrumb: true
+---
+<div class="container py-4">
+  {% include breadcrumb.html %}
+
+  <h1 class="mb-4"><i class="bi bi-search"></i> جستجو</h1>
+
+  <div class="row mb-4">
+    <div class="col-lg-8">
+      <label for="search-input" class="form-label">کلمه کلیدی</label>
+      <input type="search" id="search-input" class="form-control form-control-lg"
+             placeholder="جستجو در مطالب..." autofocus>
+    </div>
+  </div>
+
+  <div id="search-results" class="row g-3" aria-live="polite"></div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  document.addEventListener('DOMContentLoaded', async function () {
+    var input = document.getElementById('search-input');
+    var results = document.getElementById('search-results');
+    var posts = [];
+
+    try {
+      var res = await fetch('{{ "/posts.json" | relative_url }}');
+      posts = await res.json();
+    } catch (e) {
+      results.innerHTML = '<div class="alert alert-danger">خطا در بارگذاری داده‌ها.</div>';
+      return;
+    }
+
+    function esc(s) {
+      var d = document.createElement('div');
+      d.textContent = s == null ? '' : String(s);
+      return d.innerHTML;
+    }
+
+    function render(query) {
+      var q = (query || '').trim().toLowerCase();
+      if (q.length < 2) {
+        results.innerHTML = '<p class="text-muted">حداقل ۲ کاراکتر وارد کنید.</p>';
+        return;
+      }
+      var matches = posts.filter(function (p) {
+        return (p.title && p.title.toLowerCase().indexOf(q) > -1) ||
+               (p.excerpt && p.excerpt.toLowerCase().indexOf(q) > -1) ||
+               (p.tags && p.tags.some(function (t) { return t.toLowerCase().indexOf(q) > -1; }));
+      });
+      if (!matches.length) {
+        results.innerHTML = '<p class="text-muted">نتیجه‌ای یافت نشد.</p>';
+        return;
+      }
+      results.innerHTML = matches.map(function (p) {
+        return '<div class="col-md-6 col-lg-4">' +
+          '<article class="card h-100 shadow-sm">' +
+          '<div class="card-body">' +
+          '<h3 class="h6"><a href="' + esc(p.url) + '" class="text-decoration-none">' + esc(p.title) + '</a></h3>' +
+          '<p class="small text-muted mb-0">' + esc(p.excerpt) + '</p>' +
+          '</div>' +
+          '<div class="card-footer bg-white border-0 small text-muted">' + esc(p.date_formatted) + '</div>' +
+          '</article></div>';
+      }).join('');
+    }
+
+    var params = new URLSearchParams(window.location.search);
+    var initial = params.get('q');
+    if (initial) { input.value = initial; render(initial); }
+    else { results.innerHTML = '<p class="text-muted">عبارت مورد نظر را وارد کنید.</p>'; }
+
+    var timer;
+    input.addEventListener('input', function (e) {
+      clearTimeout(timer);
+      var v = e.target.value;
+      timer = setTimeout(function () { render(v); }, 200);
+    });
+  });
+})();
+</script>
