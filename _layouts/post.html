@@ -1,0 +1,73 @@
+---
+layout: default
+---
+<article class="container py-4">
+  {% include breadcrumb.html %}
+
+  <div class="row">
+    <div class="col-lg-9 mx-auto">
+      <header class="mb-4">
+        <h1 class="display-5 fw-bold mb-3">{{ page.title }}</h1>
+
+        <div class="text-muted d-flex flex-wrap gap-3 mb-3 small">
+          <span>
+            <i class="bi bi-calendar3"></i>
+            <time datetime="{{ page.date | date_to_xmlschema }}">
+              {{ page.date | date: "%Y/%m/%d" }}
+            </time>
+          </span>
+          <span><i class="bi bi-person"></i> {{ page.author | default: site.author.name }}</span>
+          {% assign words = content | strip_html | number_of_words %}
+          {% assign read_time = words | divided_by: 200 | plus: 1 %}
+          <span><i class="bi bi-clock"></i> {{ read_time }} دقیقه مطالعه</span>
+        </div>
+
+        {% if page.tags.size > 0 %}
+        <div class="mb-3">
+          {% for tag in page.tags %}
+          <a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}"
+             class="badge bg-secondary text-decoration-none me-1">{{ tag }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if page.image %}
+        <img src="{{ page.image | relative_url }}" alt="{{ page.title }}"
+             class="img-fluid rounded mb-4" loading="eager">
+        {% endif %}
+      </header>
+
+      <div class="post-content">
+        {{ content }}
+      </div>
+
+      <hr class="my-5">
+
+      <div class="share-buttons mb-5">
+        <h5 class="mb-3"><i class="bi bi-share"></i> اشتراک‌گذاری</h5>
+        <a href="https://twitter.com/intent/tweet?url={{ page.url | absolute_url | url_encode }}&text={{ page.title | url_encode }}"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-outline-dark btn-sm me-1 mb-1">
+          <i class="bi bi-twitter-x"></i> توییتر
+        </a>
+        <a href="https://t.me/share/url?url={{ page.url | absolute_url | url_encode }}&text={{ page.title | url_encode }}"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-outline-primary btn-sm me-1 mb-1">
+          <i class="bi bi-telegram"></i> تلگرام
+        </a>
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ page.url | absolute_url | url_encode }}"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-outline-info btn-sm me-1 mb-1">
+          <i class="bi bi-linkedin"></i> لینکدین
+        </a>
+        <a href="https://wa.me/?text={{ page.title | url_encode }}%20{{ page.url | absolute_url | url_encode }}"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-outline-success btn-sm mb-1">
+          <i class="bi bi-whatsapp"></i> واتس‌اپ
+        </a>
+      </div>
+
+      {% include related-posts.html %}
+    </div>
+  </div>
+</article>
