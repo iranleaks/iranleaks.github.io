@@ -1,4 +1,1 @@
-User-agent: *
-Allow: /
-
 Sitemap: https://iranleaks.github.io/sitemap.xml
