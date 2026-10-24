@@ -1,117 +1,216 @@
+/* =========================================================
+   IranLeaks Jekyll Blog
+   Main stylesheet
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   1. Variables
+   --------------------------------------------------------- */
+
 :root {
-  --bg: #f7f7f5;
-  --surface: #ffffff;
-  --text: #202124;
-  --muted: #70757a;
-  --border: #e5e5e5;
-  --accent: #1f5f8b;
-  --accent-dark: #17486a;
-  --max-width: 820px;
+  --color-background: #f7f7f5;
+  --color-surface: #ffffff;
+  --color-text: #202124;
+  --color-muted: #70757a;
+  --color-border: #e3e5e7;
+  --color-primary: #1f5f8b;
+  --color-primary-dark: #17486a;
+  --color-light-blue: #eef5f9;
+  --color-code-background: #202124;
+
+  --container-width: 820px;
+  --content-width: 760px;
+  --border-radius: 8px;
 }
 
-* {
+
+/* ---------------------------------------------------------
+   2. Basic reset
+   --------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
+  margin: 0;
+  padding: 0;
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
+  min-width: 320px;
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
+  padding: 0;
+  background: var(--color-background);
+  color: var(--color-text);
   font-family: Vazirmatn, Tahoma, Arial, sans-serif;
+  font-size: 1rem;
   line-height: 2;
   text-rendering: optimizeLegibility;
 }
 
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+img {
+  border: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+
+/* ---------------------------------------------------------
+   3. Links
+   --------------------------------------------------------- */
+
 a {
-  color: var(--accent);
+  color: var(--color-primary);
   text-decoration: none;
+  transition: color 0.15s ease, background-color 0.15s ease;
 }
 
 a:hover,
 a:focus {
-  color: var(--accent-dark);
+  color: var(--color-primary-dark);
   text-decoration: underline;
 }
 
-.container {
-  width: 92%;
-  max-width: var(--max-width);
-  margin-left: auto;
-  margin-right: auto;
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid rgba(31, 95, 139, 0.35);
+  outline-offset: 3px;
 }
 
+
+/* ---------------------------------------------------------
+   4. Layout
+   --------------------------------------------------------- */
+
+.container {
+  width: 92%;
+  max-width: var(--container-width);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+main {
+  min-height: calc(100vh - 160px);
+  padding-top: 56px;
+  padding-bottom: 72px;
+}
+
+
+/* ---------------------------------------------------------
+   5. Header
+   --------------------------------------------------------- */
+
 .site-header {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .header-inner {
-  min-height: 72px;
   display: flex;
+  min-height: 72px;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
 }
 
 .site-title {
-  color: var(--text);
+  color: var(--color-text);
   font-size: 1.15rem;
   font-weight: 700;
+  line-height: 1.5;
   white-space: nowrap;
 }
 
-.site-title:hover {
-  color: var(--accent);
+.site-title:hover,
+.site-title:focus {
+  color: var(--color-primary);
   text-decoration: none;
 }
 
 .site-nav {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 20px;
 }
 
 .site-nav a {
-  color: var(--muted);
+  color: var(--color-muted);
   font-size: 0.92rem;
+  line-height: 1.6;
 }
 
-main {
-  min-height: calc(100vh - 155px);
-  padding-top: 56px;
-  padding-bottom: 70px;
+.site-nav a:hover,
+.site-nav a:focus {
+  color: var(--color-primary);
 }
+
+
+/* ---------------------------------------------------------
+   6. Home intro
+   --------------------------------------------------------- */
 
 .intro {
   padding: 22px 0 52px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .intro-label {
   margin: 0 0 8px;
-  color: var(--accent);
+  color: var(--color-primary);
   font-size: 0.9rem;
   font-weight: 700;
+  line-height: 1.6;
 }
 
 .intro h1 {
   max-width: 700px;
   margin: 0 0 15px;
   font-size: 2.1rem;
+  font-weight: 700;
   line-height: 1.6;
 }
 
 .intro p:not(.intro-label) {
   max-width: 650px;
   margin: 0;
-  color: var(--muted);
+  color: var(--color-muted);
   font-size: 1rem;
+  line-height: 2;
 }
+
+
+/* ---------------------------------------------------------
+   7. Post list
+   --------------------------------------------------------- */
 
 .post-list {
   padding-top: 46px;
@@ -119,33 +218,47 @@ main {
 
 .section-heading h2 {
   margin: 0 0 24px;
+  color: var(--color-text);
   font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.6;
 }
 
 .post-card {
   margin-bottom: 18px;
   padding: 24px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
 }
 
 .post-card h3 {
   margin: 4px 0 8px;
   font-size: 1.3rem;
+  font-weight: 700;
   line-height: 1.7;
+}
+
+.post-card h3 a {
+  color: var(--color-text);
+}
+
+.post-card h3 a:hover,
+.post-card h3 a:focus {
+  color: var(--color-primary);
 }
 
 .post-card p:not(.post-meta) {
   margin: 8px 0 13px;
-  color: var(--muted);
-  line-height: 1.9;
+  color: var(--color-muted);
+  line-height: 1.95;
 }
 
 .post-meta {
   margin: 0;
-  color: var(--muted);
+  color: var(--color-muted);
   font-size: 0.82rem;
+  line-height: 1.6;
 }
 
 .read-more {
@@ -153,9 +266,15 @@ main {
   font-weight: 700;
 }
 
+
+/* ---------------------------------------------------------
+   8. Single post
+   --------------------------------------------------------- */
+
 .post {
-  max-width: 760px;
-  margin: 0 auto;
+  max-width: var(--content-width);
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .post-header {
@@ -165,33 +284,61 @@ main {
 
 .post-header h1 {
   margin: 8px 0 12px;
+  color: var(--color-text);
   font-size: 2.25rem;
+  font-weight: 700;
   line-height: 1.6;
 }
 
 .post-description {
-  margin: 0 auto;
   max-width: 650px;
-  color: var(--muted);
+  margin: 0 auto;
+  color: var(--color-muted);
+  line-height: 2;
 }
 
 .post-content {
+  color: var(--color-text);
   font-size: 1.04rem;
   line-height: 2.1;
 }
 
 .post-content h2,
-.post-content h3 {
+.post-content h3,
+.post-content h4 {
   margin-top: 38px;
-  line-height: 1.6;
+  margin-bottom: 15px;
+  color: var(--color-text);
+  font-weight: 700;
+  line-height: 1.65;
+}
+
+.post-content h2 {
+  font-size: 1.55rem;
+}
+
+.post-content h3 {
+  font-size: 1.3rem;
+}
+
+.post-content h4 {
+  font-size: 1.1rem;
 }
 
 .post-content p {
   margin: 0 0 22px;
 }
 
+.post-content a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
 .post-content ul,
 .post-content ol {
+  margin-top: 0;
+  margin-bottom: 24px;
   padding-right: 25px;
   padding-left: 0;
 }
@@ -200,53 +347,141 @@ main {
   margin-bottom: 8px;
 }
 
+.post-content hr {
+  height: 1px;
+  margin: 35px 0;
+  border: 0;
+  background: var(--color-border);
+}
+
+.post-content strong {
+  font-weight: 700;
+}
+
+.post-content em {
+  font-style: italic;
+}
+
+
+/* ---------------------------------------------------------
+   9. Images
+   --------------------------------------------------------- */
+
 .post-content img {
   display: block;
   max-width: 100%;
   height: auto;
-  margin: 25px auto;
+  margin: 28px auto;
   border-radius: 7px;
 }
+
+.post-content figure {
+  margin: 28px 0;
+}
+
+.post-content figcaption {
+  margin-top: 8px;
+  color: var(--color-muted);
+  font-size: 0.86rem;
+  text-align: center;
+}
+
+
+/* ---------------------------------------------------------
+   10. Blockquotes
+   --------------------------------------------------------- */
 
 .post-content blockquote {
   margin: 25px 0;
-  padding: 12px 18px;
-  background: #f0f5f8;
-  border-right: 4px solid var(--accent);
+  padding: 14px 18px;
+  background: var(--color-light-blue);
+  border-right: 4px solid var(--color-primary);
   color: #4c5660;
 }
 
+.post-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* ---------------------------------------------------------
+   11. Code blocks
+   --------------------------------------------------------- */
+
 .post-content code {
   padding: 2px 5px;
-  border-radius: 4px;
   background: #eeeeee;
-  font-family: Consolas, "Courier New", monospace;
+  border-radius: 4px;
   direction: ltr;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.9em;
 }
 
 .post-content pre {
-  direction: ltr;
-  overflow-x: auto;
+  max-width: 100%;
+  margin: 25px 0;
   padding: 16px;
+  overflow-x: auto;
+  background: var(--color-code-background);
   border-radius: 7px;
-  background: #202124;
   color: #f5f5f5;
+  direction: ltr;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.9rem;
+  line-height: 1.7;
   text-align: left;
-  line-height: 1.6;
+  white-space: pre;
+  -webkit-overflow-scrolling: touch;
 }
 
 .post-content pre code {
   padding: 0;
   background: transparent;
   color: inherit;
+  font-size: inherit;
 }
+
+
+/* ---------------------------------------------------------
+   12. Tables
+   --------------------------------------------------------- */
+
+.post-content table {
+  display: block;
+  width: 100%;
+  margin: 25px 0;
+  overflow-x: auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.post-content th,
+.post-content td {
+  min-width: 130px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  text-align: right;
+  vertical-align: top;
+}
+
+.post-content th {
+  background: var(--color-light-blue);
+  font-weight: 700;
+}
+
+
+/* ---------------------------------------------------------
+   13. Tags
+   --------------------------------------------------------- */
 
 .post-tags {
   margin-top: 42px;
   padding-top: 20px;
-  border-top: 1px solid var(--border);
-  color: var(--muted);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-muted);
   font-size: 0.9rem;
+  line-height: 1.8;
 }
 
 .post-tags span {
@@ -254,17 +489,114 @@ main {
   margin-left: 10px;
 }
 
+
+/* ---------------------------------------------------------
+   14. 404 page
+   --------------------------------------------------------- */
+
+.error-page {
+  max-width: 620px;
+  margin: 60px auto;
+  padding: 48px 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+
+.error-code {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: 5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.error-page h1 {
+  margin: 12px 0;
+  color: var(--color-text);
+  font-size: 1.8rem;
+  line-height: 1.6;
+}
+
+.error-page p:not(.error-code) {
+  max-width: 480px;
+  margin: 0 auto 25px;
+  color: var(--color-muted);
+  line-height: 2;
+}
+
+.error-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.button {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 5px;
+  background: var(--color-primary);
+  color: #ffffff;
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+.button:hover,
+.button:focus {
+  background: var(--color-primary-dark);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.text-link {
+  font-size: 0.92rem;
+}
+
+
+/* ---------------------------------------------------------
+   15. Footer
+   --------------------------------------------------------- */
+
 .site-footer {
   padding: 24px 0;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  color: var(--muted);
-  text-align: center;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-muted);
   font-size: 0.82rem;
+  text-align: center;
 }
 
 .site-footer p {
   margin: 3px 0;
+  line-height: 1.8;
+}
+
+
+/* ---------------------------------------------------------
+   16. Responsive styles
+   --------------------------------------------------------- */
+
+@media (max-width: 700px) {
+  main {
+    padding-top: 40px;
+    padding-bottom: 55px;
+  }
+
+  .intro {
+    padding-top: 10px;
+    padding-bottom: 40px;
+  }
+
+  .intro h1 {
+    font-size: 1.85rem;
+  }
+
+  .post-header h1 {
+    font-size: 2rem;
+  }
 }
 
 @media (max-width: 600px) {
@@ -272,6 +604,7 @@ main {
     align-items: flex-start;
     flex-direction: column;
     justify-content: center;
+    gap: 10px;
     padding-top: 14px;
     padding-bottom: 14px;
   }
@@ -280,25 +613,122 @@ main {
     gap: 15px;
   }
 
-  main {
-    padding-top: 32px;
-    padding-bottom: 45px;
-  }
-
-  .intro {
-    padding-top: 10px;
-    padding-bottom: 38px;
-  }
-
   .intro h1 {
-    font-size: 1.75rem;
+    font-size: 1.7rem;
+  }
+
+  .post-card {
+    padding: 19px;
+  }
+
+  .post-header {
+    margin-bottom: 32px;
   }
 
   .post-header h1 {
     font-size: 1.8rem;
   }
 
-  .post-card {
-    padding: 19px;
+  .post-content {
+    font-size: 1rem;
+    line-height: 2;
+  }
+
+  .post-content h2 {
+    font-size: 1.4rem;
+  }
+
+  .post-content h3 {
+    font-size: 1.2rem;
+  }
+
+  .error-page {
+    margin-top: 30px;
+    padding: 35px 18px;
+  }
+
+  .error-code {
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .container {
+    width: 90%;
+  }
+
+  .site-nav {
+    flex-wrap: wrap;
+    gap: 10px 14px;
+  }
+
+  .intro h1 {
+    font-size: 1.55rem;
+  }
+
+  .post-card h3 {
+    font-size: 1.15rem;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   17. Print styles
+   --------------------------------------------------------- */
+
+@media print {
+  body {
+    background: #ffffff;
+    color: #000000;
+    font-family: Georgia, "Times New Roman", serif;
+  }
+
+  .site-header,
+  .site-footer,
+  .site-nav,
+  .read-more,
+  .error-actions {
+    display: none;
+  }
+
+  main {
+    min-height: auto;
+    padding: 0;
+  }
+
+  .container,
+  .post {
+    width: 100%;
+    max-width: none;
+  }
+
+  .post-content a {
+    color: #000000;
+    text-decoration: underline;
+  }
+
+  .post-content a::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    word-break: break-all;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   18. Reduced motion
+   --------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
