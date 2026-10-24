@@ -11,19 +11,78 @@ layout: default
     <h1>{{ page.title }}</h1>
 
     {% if page.description %}
-      <p class="post-description">{{ page.description }}</p>
+      <p class="post-description">
+        {{ page.description }}
+      </p>
     {% endif %}
   </header>
+
+  {% if page.categories %}
+    <nav class="breadcrumbs" aria-label="مسیر صفحه">
+      <a href="{{ '/' | relative_url }}">خانه</a>
+
+      <span class="breadcrumb-separator">←</span>
+
+      {% for category in page.categories %}
+        <a href="{{ '/categories/' | append: category | slugify | append: '/' | relative_url }}">
+          {{ category }}
+        </a>
+
+        {% unless forloop.last %}
+          <span class="breadcrumb-separator">←</span>
+        {% endunless %}
+      {% endfor %}
+
+      <span class="breadcrumb-separator">←</span>
+      <span aria-current="page">{{ page.title }}</span>
+    </nav>
+  {% endif %}
 
   <div class="post-content">
     {{ content }}
   </div>
 
-  {% if page.tags %}
-    <div class="post-tags">
-      {% for tag in page.tags %}
-        <span>#{{ tag }}</span>
-      {% endfor %}
-    </div>
+  {% assign related_posts = "" | split: "" %}
+
+  {% for current_tag in page.tags %}
+    {% assign posts_with_same_tag = site.tags[current_tag] %}
+
+    {% for candidate_post in posts_with_same_tag %}
+      {% unless candidate_post.url == page.url %}
+        {% unless related_posts contains candidate_post %}
+          {% assign related_posts = related_posts | push: candidate_post %}
+        {% endunless %}
+      {% endunless %}
+    {% endfor %}
+  {% endfor %}
+
+  {% if related_posts.size > 0 %}
+    <section class="related-posts">
+      <h2>نوشته‌های مرتبط</h2>
+
+      <div class="related-posts-list">
+        {% for related_post in related_posts limit:6 %}
+          <article class="related-post-card">
+            <p class="post-meta">
+              {{ related_post.date | date: "%Y/%m/%d" }}
+            </p>
+
+            <h3>
+              <a href="{{ related_post.url | relative_url }}">
+                {{ related_post.title }}
+              </a>
+            </h3>
+
+            {% if related_post.description %}
+              <p>{{ related_post.description }}</p>
+            {% else %}
+              <p>
+                {{ related_post.excerpt | strip_html | strip_newlines | truncate: 150 }}
+              </p>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+    </section>
   {% endif %}
 </article>
