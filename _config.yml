@@ -1,0 +1,36 @@
+title: ایران‌لیکس
+description: وبلاگ فارسی درباره سیاست، فناوری، جامعه و رسانه
+url: "https://iranleaks.github.io"
+baseurl: ""
+
+lang: fa
+direction: rtl
+timezone: Europe/Rome
+
+markdown: kramdown
+highlighter: rouge
+permalink: /:categories/:title/
+
+paginate: 10
+
+author:
+  name: ایران‌لیکس
+  email: ""
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+feed:
+  path: /feed.xml
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - node_modules
+  - vendor
+  - .bundle
+  - .jekyll-cache
+  - .sass-cache
+  - _site
