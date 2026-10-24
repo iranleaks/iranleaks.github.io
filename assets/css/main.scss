@@ -61,7 +61,11 @@ a:hover {
 }
 
 .navbar-brand img {
-  border-radius: 6px;
+  border-radius: 8px;
+}
+
+.navbar-brand span {
+  font-size: 1.15rem;
 }
 
 .nav-link.active {
@@ -240,7 +244,7 @@ a:hover {
 }
 
 /* ============================================
-   Breadcrumb
+   Breadcrumb — فلش به سمت راست (RTL)
    ============================================ */
 .breadcrumb {
   background: transparent;
@@ -249,8 +253,11 @@ a:hover {
 }
 
 .breadcrumb-item + .breadcrumb-item::before {
-  content: "‹";
+  content: "›";
   color: #6c757d;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  font-weight: 700;
 }
 
 /* ============================================
@@ -296,5 +303,8 @@ input:focus-visible {
     left: 16px;
     width: 40px;
     height: 40px;
+  }
+  .navbar-brand span {
+    font-size: 1rem;
   }
 }
