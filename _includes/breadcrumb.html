@@ -16,6 +16,11 @@
   </ol>
 </nav>
 
+{% if page.tags.size > 0 %}
+  {% assign tag_slug = page.tags[0] | slugify %}
+  {% capture tag_absolute_url %}{{ '/tags/' | absolute_url }}#{{ tag_slug }}{% endcapture %}
+{% endif %}
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -38,7 +43,7 @@
       "@type": "ListItem",
       "position": 3,
       "name": {{ page.tags[0] | jsonify }},
-      "item": {{ '/tags/' | absolute_url | append: '#' | append: page.tags[0] | slugify | jsonify }}
+      "item": {{ tag_absolute_url | jsonify }}
     },
     {
       "@type": "ListItem",
