@@ -1,1 +1,6 @@
-Sitemap: https://iranleaks.github.io/sitemap.xml
+---
+layout: null
+sitemap: false
+---
+
+Sitemap: {{ site.url }}/sitemap.xml
