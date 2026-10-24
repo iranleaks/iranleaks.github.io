@@ -16,7 +16,19 @@ layout: default
               {{ page.date | date: "%Y/%m/%d" }}
             </time>
           </span>
+
+          {% if page.last_modified_at and page.last_modified_at != page.date %}
+          <span>
+            <i class="bi bi-clock-history"></i>
+            آخرین به‌روزرسانی:
+            <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">
+              {{ page.last_modified_at | date: "%Y/%m/%d" }}
+            </time>
+          </span>
+          {% endif %}
+
           <span><i class="bi bi-person"></i> {{ page.author | default: site.author.name }}</span>
+
           {% assign words = content | strip_html | number_of_words %}
           {% assign read_time = words | divided_by: 200 | plus: 1 %}
           <span><i class="bi bi-clock"></i> {{ read_time }} دقیقه مطالعه</span>
@@ -25,7 +37,7 @@ layout: default
         {% if page.tags.size > 0 %}
         <div class="mb-3">
           {% for tag in page.tags %}
-          <a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}"
+          <a href="{{ '/blog/' | relative_url }}#{{ tag | slugify }}"
              class="badge bg-secondary text-decoration-none me-1">{{ tag }}</a>
           {% endfor %}
         </div>
