@@ -26,7 +26,7 @@ breadcrumb: true
 (function () {
   'use strict';
 
-  var persianMonths = ['ژانویه','فوریه','مارس','آوریل','مه','ژوئن','ژوئیه','اوت','سپتامبر','اکتبر','نوامبر','دسامبر'];
+  var jalaliMonths = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
   var persianDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
 
   function faNum(n) {
@@ -36,14 +36,54 @@ breadcrumb: true
     }).join('');
   }
 
+  function toJalali(gy, gm, gd) {
+    var g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+    var gy2 = gy - 1600;
+    var gm2 = gm - 1;
+    var gd2 = gd - 1;
+
+    var g_day_no = 365 * gy2
+      + Math.floor((gy2 + 3) / 4)
+      - Math.floor((gy2 + 99) / 100)
+      + Math.floor((gy2 + 399) / 400)
+      + gd2 + g_d_m[gm2];
+
+    var isLeap = (gy % 4 === 0 && gy % 100 !== 0) || gy % 400 === 0;
+    if (gm2 > 1 && isLeap) g_day_no++;
+
+    var j_day_no = g_day_no - 79;
+    var j_np = Math.floor(j_day_no / 12053);
+    j_day_no = j_day_no % 12053;
+
+    var jy = 979 + 33 * j_np + 4 * Math.floor(j_day_no / 1461);
+    j_day_no = j_day_no % 1461;
+
+    if (j_day_no >= 366) {
+      jy += Math.floor((j_day_no - 1) / 365);
+      j_day_no = (j_day_no - 1) % 365;
+    }
+
+    var jm, jd;
+    if (j_day_no < 186) {
+      jm = 1 + Math.floor(j_day_no / 31);
+      jd = 1 + (j_day_no % 31);
+    } else {
+      jm = 7 + Math.floor((j_day_no - 186) / 30);
+      jd = 1 + ((j_day_no - 186) % 30);
+    }
+
+    return { jy: jy, jm: jm, jd: jd };
+  }
+
   function toFaDate(isoString) {
     if (!isoString) return '';
     var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(isoString);
     if (!m) return isoString;
-    var year = parseInt(m[1], 10);
-    var month = parseInt(m[2], 10) - 1;
-    var day = parseInt(m[3], 10);
-    return faNum(day) + ' ' + (persianMonths[month] || '') + ' ' + faNum(year);
+    var gy = parseInt(m[1], 10);
+    var gm = parseInt(m[2], 10);
+    var gd = parseInt(m[3], 10);
+    var j = toJalali(gy, gm, gd);
+    return faNum(j.jd) + ' ' + (jalaliMonths[j.jm - 1] || '') + ' ' + faNum(j.jy);
   }
 
   document.addEventListener('DOMContentLoaded', async function () {
