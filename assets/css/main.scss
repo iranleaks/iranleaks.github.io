@@ -74,6 +74,39 @@ a:hover {
 }
 
 /* ============================================
+   دکمه‌های آیکونی — مرکزچین دقیق
+   ============================================ */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0.35rem 0.5rem;
+  min-width: 2rem;
+  min-height: 2rem;
+}
+
+.btn-icon > .bi {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-size: 1rem;
+}
+
+/* خنثی‌کردن vertical-align پیش‌فرض Bootstrap Icons داخل دکمه‌های آیکونی */
+.btn-icon > .bi::before {
+  vertical-align: 0;
+  line-height: 1;
+}
+
+/* اطمینان از هم‌ترازی دکمه و input در فرم جستجو */
+.navbar form[role="search"] .form-control,
+.navbar form[role="search"] .btn {
+  height: 2rem;
+}
+
+/* ============================================
    کارت‌های نوشته
    ============================================ */
 .post-card {
