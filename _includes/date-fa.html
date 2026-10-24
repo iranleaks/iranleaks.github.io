@@ -1,23 +1,95 @@
-{%- assign day   = include.date | date: "%-d" -%}
-{%- assign month = include.date | date: "%-m" -%}
-{%- assign year  = include.date | date: "%Y" -%}
+{%- comment -%}
+  تبدیل تاریخ میلادی به جلالی
+  ورودی: include.date  (تاریخ معتبر Liquid، مثل page.date)
+  خروجی: مثال → ۲۵ دی ۱۴۰۲
+{%- endcomment -%}
 
-{%- case month -%}
-{%- when "1"  -%}{%- assign month_fa = "ژانویه" -%}
-{%- when "2"  -%}{%- assign month_fa = "فوریه" -%}
-{%- when "3"  -%}{%- assign month_fa = "مارس" -%}
-{%- when "4"  -%}{%- assign month_fa = "آوریل" -%}
-{%- when "5"  -%}{%- assign month_fa = "مه" -%}
-{%- when "6"  -%}{%- assign month_fa = "ژوئن" -%}
-{%- when "7"  -%}{%- assign month_fa = "ژوئیه" -%}
-{%- when "8"  -%}{%- assign month_fa = "اوت" -%}
-{%- when "9"  -%}{%- assign month_fa = "سپتامبر" -%}
-{%- when "10" -%}{%- assign month_fa = "اکتبر" -%}
-{%- when "11" -%}{%- assign month_fa = "نوامبر" -%}
-{%- when "12" -%}{%- assign month_fa = "دسامبر" -%}
+{%- assign gy = include.date | date: "%Y" | plus: 0 -%}
+{%- assign gm = include.date | date: "%-m" | plus: 0 -%}
+{%- assign gd = include.date | date: "%-d" | plus: 0 -%}
+
+{%- assign gy1600 = gy | minus: 1600 -%}
+{%- assign gm0 = gm | minus: 1 -%}
+{%- assign gd0 = gd | minus: 1 -%}
+
+{%- case gm0 -%}
+  {%- when 0 -%}{%- assign g_days_before = 0 -%}
+  {%- when 1 -%}{%- assign g_days_before = 31 -%}
+  {%- when 2 -%}{%- assign g_days_before = 59 -%}
+  {%- when 3 -%}{%- assign g_days_before = 90 -%}
+  {%- when 4 -%}{%- assign g_days_before = 120 -%}
+  {%- when 5 -%}{%- assign g_days_before = 151 -%}
+  {%- when 6 -%}{%- assign g_days_before = 181 -%}
+  {%- when 7 -%}{%- assign g_days_before = 212 -%}
+  {%- when 8 -%}{%- assign g_days_before = 243 -%}
+  {%- when 9 -%}{%- assign g_days_before = 273 -%}
+  {%- when 10 -%}{%- assign g_days_before = 304 -%}
+  {%- when 11 -%}{%- assign g_days_before = 334 -%}
 {%- endcase -%}
 
-{%- assign day_fa  = day  | replace: "0","۰" | replace: "1","۱" | replace: "2","۲" | replace: "3","۳" | replace: "4","۴" | replace: "5","۵" | replace: "6","۶" | replace: "7","۷" | replace: "8","۸" | replace: "9","۹" -%}
-{%- assign year_fa = year | replace: "0","۰" | replace: "1","۱" | replace: "2","۲" | replace: "3","۳" | replace: "4","۴" | replace: "5","۵" | replace: "6","۶" | replace: "7","۷" | replace: "8","۸" | replace: "9","۹" -%}
+{%- assign part1 = gy1600 | times: 365 -%}
+{%- assign gy3   = gy1600 | plus: 3 -%}
+{%- assign gy99  = gy1600 | plus: 99 -%}
+{%- assign gy399 = gy1600 | plus: 399 -%}
+{%- assign part2 = gy3   | divided_by: 4 -%}
+{%- assign part3 = gy99  | divided_by: 100 -%}
+{%- assign part4 = gy399 | divided_by: 400 -%}
 
-{{- day_fa }} {{ month_fa }} {{ year_fa -}}
+{%- assign g_day_no = part1 | plus: part2 | minus: part3 | plus: part4 | plus: gd0 | plus: g_days_before -%}
+
+{%- assign gy_mod4   = gy | modulo: 4 -%}
+{%- assign gy_mod100 = gy | modulo: 100 -%}
+{%- assign gy_mod400 = gy | modulo: 400 -%}
+{%- assign is_leap = false -%}
+{%- if gy_mod4 == 0 and gy_mod100 != 0 -%}{%- assign is_leap = true -%}{%- endif -%}
+{%- if gy_mod400 == 0 -%}{%- assign is_leap = true -%}{%- endif -%}
+
+{%- if gm0 > 1 and is_leap -%}
+  {%- assign g_day_no = g_day_no | plus: 1 -%}
+{%- endif -%}
+
+{%- assign j_day_no = g_day_no | minus: 79 -%}
+{%- assign j_np = j_day_no | divided_by: 12053 -%}
+{%- assign j_day_no = j_day_no | modulo: 12053 -%}
+
+{%- assign j_np33 = j_np | times: 33 -%}
+{%- assign j_day_1461 = j_day_no | divided_by: 1461 -%}
+{%- assign j_day_1461_4 = j_day_1461 | times: 4 -%}
+{%- assign jy = 979 | plus: j_np33 | plus: j_day_1461_4 -%}
+{%- assign j_day_no = j_day_no | modulo: 1461 -%}
+
+{%- if j_day_no >= 366 -%}
+  {%- assign jd1 = j_day_no | minus: 1 -%}
+  {%- assign jy_inc = jd1 | divided_by: 365 -%}
+  {%- assign jy = jy | plus: jy_inc -%}
+  {%- assign j_day_no = jd1 | modulo: 365 -%}
+{%- endif -%}
+
+{%- if j_day_no < 186 -%}
+  {%- assign jm = j_day_no | divided_by: 31 | plus: 1 -%}
+  {%- assign jd = j_day_no | modulo: 31 | plus: 1 -%}
+{%- else -%}
+  {%- assign jm_calc = j_day_no | minus: 186 -%}
+  {%- assign jm = jm_calc | divided_by: 30 | plus: 7 -%}
+  {%- assign jd = jm_calc | modulo: 30 | plus: 1 -%}
+{%- endif -%}
+
+{%- case jm -%}
+  {%- when 1  -%}{%- assign jm_name = "فروردین" -%}
+  {%- when 2  -%}{%- assign jm_name = "اردیبهشت" -%}
+  {%- when 3  -%}{%- assign jm_name = "خرداد" -%}
+  {%- when 4  -%}{%- assign jm_name = "تیر" -%}
+  {%- when 5  -%}{%- assign jm_name = "مرداد" -%}
+  {%- when 6  -%}{%- assign jm_name = "شهریور" -%}
+  {%- when 7  -%}{%- assign jm_name = "مهر" -%}
+  {%- when 8  -%}{%- assign jm_name = "آبان" -%}
+  {%- when 9  -%}{%- assign jm_name = "آذر" -%}
+  {%- when 10 -%}{%- assign jm_name = "دی" -%}
+  {%- when 11 -%}{%- assign jm_name = "بهمن" -%}
+  {%- when 12 -%}{%- assign jm_name = "اسفند" -%}
+{%- endcase -%}
+
+{%- assign jd_fa = jd | append: "" | replace: "0","۰" | replace: "1","۱" | replace: "2","۲" | replace: "3","۳" | replace: "4","۴" | replace: "5","۵" | replace: "6","۶" | replace: "7","۷" | replace: "8","۸" | replace: "9","۹" -%}
+{%- assign jy_fa = jy | append: "" | replace: "0","۰" | replace: "1","۱" | replace: "2","۲" | replace: "3","۳" | replace: "4","۴" | replace: "5","۵" | replace: "6","۶" | replace: "7","۷" | replace: "8","۸" | replace: "9","۹" -%}
+
+{{- jd_fa }} {{ jm_name }} {{ jy_fa -}}
