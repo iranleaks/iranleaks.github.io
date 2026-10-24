@@ -1,25 +1,81 @@
 ---
 layout: default
 title: وبلاگ
-description: "همه نوشته‌های وبلاگ ایران لیکس"
+description: "همه نوشته‌های بلاندر به تفکیک موضوع"
 permalink: /blog/
 breadcrumb: true
 ---
+{% assign sorted_tags = site.tags | sort %}
+
 <div class="container py-4">
   {% include breadcrumb.html %}
 
-  <h1 class="mb-4"><i class="bi bi-journal-text"></i> وبلاگ</h1>
-  <p class="text-muted mb-4">مجموعهٔ تمام نوشته‌ها و تحلیل‌های وبلاگ.</p>
+  <h1 class="mb-3"><i class="bi bi-journal-text"></i> وبلاگ</h1>
+  <p class="text-muted mb-4">
+    مجموعهٔ تمام نوشته‌ها به تفکیک موضوع. روی هر برچسب کلیک کنید تا به بخش مربوطه بروید.
+  </p>
 
   {% if site.posts.size > 0 %}
-  <div class="row g-4">
-    {% for post in site.posts %}
-    <div class="col-md-6 col-lg-4">
-      {% include post-card.html post=post %}
-    </div>
+
+    {% if site.tags.size > 0 %}
+    <nav aria-label="فیلتر برچسب‌ها" class="mb-5">
+      {% for tag in sorted_tags %}
+      <a href="#{{ tag[0] | slugify }}"
+         class="btn btn-sm btn-outline-primary m-1 tag-filter">
+        {{ tag[0] }}
+        <span class="badge bg-primary ms-1">{{ tag[1].size }}</span>
+      </a>
+      {% endfor %}
+    </nav>
+
+    {% for tag in sorted_tags %}
+    <section id="{{ tag[0] | slugify }}" class="tag-section mb-5">
+      <h2 class="h4 border-bottom pb-2 mb-3">
+        <i class="bi bi-tag"></i> {{ tag[0] }}
+        <span class="badge bg-secondary ms-1">{{ tag[1].size }} مطلب</span>
+      </h2>
+      <div class="row g-3">
+        {% for post in tag[1] %}
+        <div class="col-md-6 col-lg-4">
+          {% include post-card.html post=post %}
+        </div>
+        {% endfor %}
+      </div>
+    </section>
     {% endfor %}
-  </div>
+    {% endif %}
+
+    {% comment %}
+      بررسی وجود نوشته‌های بدون تگ
+    {% endcomment %}
+    {% assign has_untagged = false %}
+    {% for post in site.posts %}
+      {% if post.tags.size == 0 %}
+        {% assign has_untagged = true %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+
+    {% if has_untagged %}
+    <section id="untagged" class="tag-section mb-5">
+      <h2 class="h4 border-bottom pb-2 mb-3">
+        <i class="bi bi-question-circle"></i> سایر مطالب
+      </h2>
+      <div class="row g-3">
+        {% for post in site.posts %}
+          {% if post.tags.size == 0 %}
+          <div class="col-md-6 col-lg-4">
+            {% include post-card.html post=post %}
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
   {% else %}
-  <div class="alert alert-info">هنوز نوشته‌ای منتشر نشده است.</div>
+  <div class="alert alert-info">
+    <i class="bi bi-info-circle"></i> هنوز نوشته‌ای منتشر نشده است.
+  </div>
   {% endif %}
 </div>
