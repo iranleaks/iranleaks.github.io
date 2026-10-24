@@ -9,7 +9,7 @@
     </li>
     {% if page.tags.size > 0 %}
     <li class="breadcrumb-item">
-      <a href="{{ '/tags/' | relative_url }}#{{ page.tags[0] | slugify }}">{{ page.tags[0] }}</a>
+      <a href="{{ '/blog/' | relative_url }}#{{ page.tags[0] | slugify }}">{{ page.tags[0] }}</a>
     </li>
     {% endif %}
     <li class="breadcrumb-item active" aria-current="page">{{ page.title | truncate: 50 }}</li>
@@ -18,7 +18,7 @@
 
 {% if page.tags.size > 0 %}
   {% assign tag_slug = page.tags[0] | slugify %}
-  {% capture tag_absolute_url %}{{ '/tags/' | absolute_url }}#{{ tag_slug }}{% endcapture %}
+  {% capture tag_absolute_url %}{{ '/blog/' | absolute_url }}#{{ tag_slug }}{% endcapture %}
 {% endif %}
 
 <script type="application/ld+json">
