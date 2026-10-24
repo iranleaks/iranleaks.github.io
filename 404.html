@@ -1,25 +1,20 @@
 ---
 layout: default
 permalink: /404.html
+sitemap: false
 ---
-
-<section class="error-page">
-  <p class="error-code">۴۰۴</p>
-
-  <h1>صفحه پیدا نشد</h1>
-
-  <p>
-    متأسفانه صفحه‌ای که دنبال آن هستید وجود ندارد،
-    حذف شده یا آدرس آن تغییر کرده است.
+<div class="container py-5 text-center">
+  <h1 class="display-1 fw-bold text-primary">۴۰۴</h1>
+  <h2 class="mb-3">صفحه مورد نظر پیدا نشد</h2>
+  <p class="lead text-muted mb-4">
+    متأسفانه صفحه‌ای که به دنبال آن بودید وجود ندارد یا منتقل شده است.
   </p>
-
-  <div class="error-actions">
-    <a class="button" href="{{ '/' | relative_url }}">
-      بازگشت به صفحهٔ اصلی
+  <div class="d-flex gap-2 justify-content-center flex-wrap">
+    <a href="{{ '/' | relative_url }}" class="btn btn-primary btn-lg">
+      <i class="bi bi-house-door"></i> بازگشت به خانه
     </a>
-
-    <a class="text-link" href="{{ '/about/' | relative_url }}">
-      دربارهٔ وبلاگ
+    <a href="{{ '/blog/' | relative_url }}" class="btn btn-outline-primary btn-lg">
+      <i class="bi bi-journal-text"></i> مشاهده وبلاگ
     </a>
   </div>
-</section>
+</div>
