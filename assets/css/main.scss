@@ -94,13 +94,11 @@ a:hover {
   font-size: 1rem;
 }
 
-/* خنثی‌کردن vertical-align پیش‌فرض Bootstrap Icons داخل دکمه‌های آیکونی */
 .btn-icon > .bi::before {
   vertical-align: 0;
   line-height: 1;
 }
 
-/* اطمینان از هم‌ترازی دکمه و input در فرم جستجو */
 .navbar form[role="search"] .form-control,
 .navbar form[role="search"] .btn {
   height: 2rem;
@@ -266,14 +264,86 @@ a:hover {
 }
 
 /* ============================================
-   فوتر
+   فوتر مینیمال
    ============================================ */
 .site-footer {
   margin-top: auto;
 }
 
-.site-footer a:hover {
-  text-decoration: underline !important;
+/* لوگو */
+.site-footer .footer-logo a {
+  display: inline-flex;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.site-footer .footer-logo a:hover {
+  opacity: 0.85;
+  text-decoration: none;
+}
+
+.site-footer .footer-logo img {
+  border-radius: 10px;
+}
+
+/* لینک‌های دسترسی */
+.site-footer .footer-links {
+  font-size: 0.9rem;
+}
+
+.site-footer .footer-links a {
+  color: #ced4da;
+  text-decoration: none;
+  padding: 0.15rem 0.4rem;
+  transition: color 0.15s ease;
+}
+
+.site-footer .footer-links a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* دکمه‌های شبکه‌های اجتماعی */
+.footer-social {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e9ecef;
+  text-decoration: none;
+  font-size: 1.05rem;
+  line-height: 1;
+  transition: background-color 0.15s ease, transform 0.15s ease, color 0.15s ease;
+}
+
+.footer-social a:hover {
+  background: #0d6efd;
+  color: #fff;
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.footer-social a > .bi {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.footer-social a > .bi::before {
+  vertical-align: 0;
+  line-height: 1;
 }
 
 /* ============================================
@@ -338,6 +408,11 @@ input:focus-visible {
     height: 40px;
   }
   .navbar-brand span {
+    font-size: 1rem;
+  }
+  .footer-social a {
+    width: 36px;
+    height: 36px;
     font-size: 1rem;
   }
 }
