@@ -2,9 +2,9 @@
 layout: post
 title: نخستین نوشتهٔ ایران‌لیکس
 categories:
-  - یادداشت
+  - blog
 tags:
-  - شروع
+  - ایران
 description: نخستین نوشته در وبلاگ ایران‌لیکس.
 ---
 
