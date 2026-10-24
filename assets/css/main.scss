@@ -64,13 +64,32 @@ a:hover {
   border-radius: 8px;
 }
 
-.navbar-brand span {
-  font-size: 1.15rem;
-}
-
 .nav-link.active {
   font-weight: 700;
   border-bottom: 2px solid #fff;
+}
+
+/* ============================================
+   منوی هدر — تراز دقیق آیکون با متن
+   ============================================ */
+.navbar-nav .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.navbar-nav .nav-link > .bi {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+  font-size: 1rem;
+}
+
+.navbar-nav .nav-link > .bi::before {
+  vertical-align: 0;
+  line-height: 1;
 }
 
 /* ============================================
@@ -406,9 +425,6 @@ input:focus-visible {
     left: 16px;
     width: 40px;
     height: 40px;
-  }
-  .navbar-brand span {
-    font-size: 1rem;
   }
   .footer-social a {
     width: 36px;
