@@ -1,3 +1,6 @@
+# ============================================
+# تنظیمات اصلی سایت
+# ============================================
 title: "ایران لیکس"
 description: "وبلاگ ایران لیکس — تحلیل، بررسی و اخبار فناوری، امنیت و حریم خصوصی"
 url: "https://iranleaks.github.io"
@@ -5,21 +8,37 @@ baseurl: ""
 lang: fa
 dir: rtl
 
+# نویسنده
 author:
-  name: "احسان چهری"
-  email: "ehsanchehri@gmail.com"
+  name: "Iran Leaks"
+  email: "info@iranleaks.github.io"
 
+# لوگو و فاویکون
 logo: "/blog.svg"
 favicon: "/blog.svg"
 
+# ============================================
+# شبکه‌های اجتماعی
+# هر فیلد را با آدرس واقعی جایگزین کن.
+# اگر خالی بماند (""), دکمه‌اش در فوتر نمایش داده نمی‌شود.
+# ============================================
 social:
   name: "Iran Leaks"
-  links:
-    - "https://iranleaks.github.io"
+  instagram: "https://instagram.com/ehsanchehri"
+  x: ""
+  facebook: "https://facebook.com/ehsanchehri"
+  youtube: ""
+  linkedin: "https://linkedin.com/in/ehsanchehri"
 
+# ============================================
+# تنظیمات ساخت
+# ============================================
 markdown: kramdown
 highlighter: rouge
 
+# آدرس پست‌ها: /tag/title/
+# مهم: در هر پست حتماً categories را برابر تگ اصلی بگذارید
+#   categories: [امنیت]
 permalink: /:categories/:title/
 
 timezone: Asia/Tehran
@@ -31,6 +50,15 @@ kramdown:
   toc_levels: 1..3
   smart_quotes: lsquo,rsquo,ldquo,rdquo
 
+# ============================================
+# افزونه‌ها
+# ============================================
+# jekyll-sitemap حذف شد — سایت‌مپ سفارشی در /sitemap.xml
+plugins: []
+
+# ============================================
+# پیش‌فرض‌ها
+# ============================================
 defaults:
   - scope:
       path: ""
@@ -44,6 +72,9 @@ defaults:
     values:
       layout: "page"
 
+# ============================================
+# موارد مستثنی
+# ============================================
 exclude:
   - Gemfile
   - Gemfile.lock
