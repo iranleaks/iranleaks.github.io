@@ -32,7 +32,7 @@
     <span>
       <i class="bi bi-calendar3"></i>
       <time datetime="{{ post.date | date_to_xmlschema }}">
-        {{ post.date | date: "%Y/%m/%d" }}
+        {% include date-fa.html date=post.date %}
       </time>
     </span>
     <span class="text-primary">ادامه <i class="bi bi-arrow-left"></i></span>
