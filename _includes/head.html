@@ -2,14 +2,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<!-- ========== SEO Title ========== -->
 {% if page.title and page.title != site.title %}
   <title>{{ page.title }} | {{ site.title }}</title>
 {% else %}
   <title>{{ site.title }} — {{ site.description }}</title>
 {% endif %}
 
-<!-- ========== Meta Description ========== -->
 {% if page.description %}
   {% assign meta_desc = page.description %}
 {% elsif page.excerpt %}
@@ -19,25 +17,20 @@
 {% endif %}
 <meta name="description" content="{{ meta_desc | escape }}">
 
-<!-- ========== Keywords ========== -->
 {% if page.tags %}
 <meta name="keywords" content="{{ page.tags | join: ', ' | escape }}">
 {% endif %}
 
-<!-- ========== Canonical ========== -->
 <link rel="canonical" href="{{ page.url | absolute_url }}">
 
-<!-- ========== Author ========== -->
 <meta name="author" content="{{ page.author | default: site.author.name | escape }}">
 
-<!-- ========== Robots ========== -->
 {% if page.sitemap == false or page.noindex %}
 <meta name="robots" content="noindex, nofollow">
 {% else %}
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 {% endif %}
 
-<!-- ========== Open Graph ========== -->
 <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
 <meta property="og:title" content="{{ page.title | default: site.title | escape }}">
 <meta property="og:description" content="{{ meta_desc | escape }}">
@@ -58,7 +51,6 @@
 {% endfor %}
 {% endif %}
 
-<!-- ========== Twitter Card ========== -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ page.title | default: site.title | escape }}">
 <meta name="twitter:description" content="{{ meta_desc | escape }}">
@@ -68,28 +60,19 @@
 <meta name="twitter:image" content="{{ site.logo | absolute_url }}">
 {% endif %}
 
-<!-- ========== Theme Color ========== -->
 <meta name="theme-color" content="#0d6efd">
 
-<!-- ========== Preconnect و Preload ========== -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preload" href="https://iranleaks.github.io/blog.woff2" as="font" type="font/woff2" crossorigin>
 
-<!-- ========== Favicon ========== -->
 <link rel="icon" type="image/svg+xml" href="{{ site.favicon | absolute_url }}">
 <link rel="apple-touch-icon" href="{{ site.favicon | absolute_url }}">
 
-<!-- ========== Bootstrap RTL 5.3.3 ========== -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
-
-<!-- ========== Bootstrap Icons ========== -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-<!-- ========== استایل اختصاصی ========== -->
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
 
-<!-- ========== RSS ========== -->
-<link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/feed.xml' | absolute_url }}">
+<!-- فید RSS/Atom در /rss.xml -->
+<link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/rss.xml' | absolute_url }}">
 
-<!-- ========== Structured Data (JSON-LD) ========== -->
 {% include structured-data.html %}
