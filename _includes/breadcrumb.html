@@ -1,0 +1,68 @@
+{% if page.layout == 'post' %}
+<nav aria-label="breadcrumb" class="mb-4">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="{{ '/' | relative_url }}"><i class="bi bi-house-door"></i> خانه</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="{{ '/blog/' | relative_url }}">وبلاگ</a>
+    </li>
+    {% if page.tags.size > 0 %}
+    <li class="breadcrumb-item">
+      <a href="{{ '/tags/' | relative_url }}#{{ page.tags[0] | slugify }}">{{ page.tags[0] }}</a>
+    </li>
+    {% endif %}
+    <li class="breadcrumb-item active" aria-current="page">{{ page.title | truncate: 50 }}</li>
+  </ol>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "خانه",
+      "item": {{ '/' | absolute_url | jsonify }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "وبلاگ",
+      "item": {{ '/blog/' | absolute_url | jsonify }}
+    },
+    {% if page.tags.size > 0 %}
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": {{ page.tags[0] | jsonify }},
+      "item": {{ '/tags/' | absolute_url | append: '#' | append: page.tags[0] | slugify | jsonify }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": {{ page.title | jsonify }}
+    }
+    {% else %}
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": {{ page.title | jsonify }}
+    }
+    {% endif %}
+  ]
+}
+</script>
+
+{% elsif page.breadcrumb %}
+<nav aria-label="breadcrumb" class="mb-4">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="{{ '/' | relative_url }}"><i class="bi bi-house-door"></i> خانه</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ page.title }}</li>
+  </ol>
+</nav>
+{% endif %}
