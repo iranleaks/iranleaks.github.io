@@ -1,41 +1,26 @@
-<!doctype html>
-<html lang="{{ site.lang | default: 'fa' }}" dir="{{ site.direction | default: 'rtl' }}">
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'fa' }}" dir="{{ site.dir | default: 'rtl' }}">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>
-    {% if page.title and page.title != 'خانه' %}
-      {{ page.title }} | {{ site.title }}
-    {% else %}
-      {{ site.title }}
-    {% endif %}
-  </title>
-
-  <meta name="description" content="{{ page.description | default: site.description | escape }}">
-  <meta name="author" content="{{ site.author.name | escape }}">
-
-  <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
-
-  <link rel="alternate"
-        type="application/atom+xml"
-        title="{{ site.title }}"
-        href="{{ '/feed.xml' | absolute_url }}">
-
-  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
-
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+  {% include head.html %}
 </head>
-
 <body>
   {% include header.html %}
 
-  <main class="container">
+  <main id="main-content" role="main">
     {{ content }}
   </main>
 
   {% include footer.html %}
+
+  <button id="back-to-top" class="btn btn-primary back-to-top"
+          aria-label="بازگشت به بالای صفحه" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+         fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+      <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+    </svg>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
 </body>
 </html>
