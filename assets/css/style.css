@@ -1,5 +1,5 @@
 /* =========================================================
-   IranLeaks Jekyll Blog
+   IranLeaks Blog
    Main stylesheet
    ========================================================= */
 
@@ -9,24 +9,26 @@
    --------------------------------------------------------- */
 
 :root {
-  --color-background: #f7f7f5;
-  --color-surface: #ffffff;
-  --color-text: #202124;
-  --color-muted: #70757a;
-  --color-border: #e3e5e7;
-  --color-primary: #1f5f8b;
-  --color-primary-dark: #17486a;
-  --color-light-blue: #eef5f9;
-  --color-code-background: #202124;
+  --background: #f7f7f5;
+  --surface: #ffffff;
+  --text: #202124;
+  --muted: #70757a;
+  --border: #e2e5e8;
+
+  --primary: #1f5f8b;
+  --primary-dark: #17486a;
+  --primary-light: #eef5f9;
+
+  --code-background: #202124;
 
   --container-width: 820px;
   --content-width: 760px;
-  --border-radius: 8px;
+  --radius: 8px;
 }
 
 
 /* ---------------------------------------------------------
-   2. Basic reset
+   2. Reset
    --------------------------------------------------------- */
 
 *,
@@ -39,19 +41,22 @@ html {
   margin: 0;
   padding: 0;
   font-size: 16px;
-  -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   min-width: 320px;
   margin: 0;
   padding: 0;
-  background: var(--color-background);
-  color: var(--color-text);
+
+  background: var(--background);
+  color: var(--text);
+
   font-family: Vazirmatn, Tahoma, Arial, sans-serif;
   font-size: 1rem;
   line-height: 2;
+
   text-rendering: optimizeLegibility;
 }
 
@@ -73,12 +78,8 @@ select {
   font: inherit;
 }
 
-button {
-  cursor: pointer;
-}
-
 ::selection {
-  background: var(--color-primary);
+  background: var(--primary);
   color: #ffffff;
 }
 
@@ -88,14 +89,17 @@ button {
    --------------------------------------------------------- */
 
 a {
-  color: var(--color-primary);
+  color: var(--primary);
   text-decoration: none;
-  transition: color 0.15s ease, background-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 a:hover,
 a:focus {
-  color: var(--color-primary-dark);
+  color: var(--primary-dark);
   text-decoration: underline;
 }
 
@@ -107,7 +111,7 @@ button:focus-visible {
 
 
 /* ---------------------------------------------------------
-   4. Layout
+   4. General layout
    --------------------------------------------------------- */
 
 .container {
@@ -129,8 +133,8 @@ main {
    --------------------------------------------------------- */
 
 .site-header {
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
 }
 
 .header-inner {
@@ -142,7 +146,7 @@ main {
 }
 
 .site-title {
-  color: var(--color-text);
+  color: var(--text);
   font-size: 1.15rem;
   font-weight: 700;
   line-height: 1.5;
@@ -151,7 +155,7 @@ main {
 
 .site-title:hover,
 .site-title:focus {
-  color: var(--color-primary);
+  color: var(--primary);
   text-decoration: none;
 }
 
@@ -159,33 +163,34 @@ main {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  flex-wrap: wrap;
   gap: 20px;
 }
 
 .site-nav a {
-  color: var(--color-muted);
+  color: var(--muted);
   font-size: 0.92rem;
   line-height: 1.6;
 }
 
 .site-nav a:hover,
 .site-nav a:focus {
-  color: var(--color-primary);
+  color: var(--primary);
 }
 
 
 /* ---------------------------------------------------------
-   6. Home intro
+   6. Home page intro
    --------------------------------------------------------- */
 
 .intro {
   padding: 22px 0 52px;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--border);
 }
 
 .intro-label {
   margin: 0 0 8px;
-  color: var(--color-primary);
+  color: var(--primary);
   font-size: 0.9rem;
   font-weight: 700;
   line-height: 1.6;
@@ -194,6 +199,7 @@ main {
 .intro h1 {
   max-width: 700px;
   margin: 0 0 15px;
+  color: var(--text);
   font-size: 2.1rem;
   font-weight: 700;
   line-height: 1.6;
@@ -202,14 +208,14 @@ main {
 .intro p:not(.intro-label) {
   max-width: 650px;
   margin: 0;
-  color: var(--color-muted);
+  color: var(--muted);
   font-size: 1rem;
   line-height: 2;
 }
 
 
 /* ---------------------------------------------------------
-   7. Post list
+   7. Posts list
    --------------------------------------------------------- */
 
 .post-list {
@@ -218,7 +224,7 @@ main {
 
 .section-heading h2 {
   margin: 0 0 24px;
-  color: var(--color-text);
+  color: var(--text);
   font-size: 1.35rem;
   font-weight: 700;
   line-height: 1.6;
@@ -227,36 +233,41 @@ main {
 .post-card {
   margin-bottom: 18px;
   padding: 24px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 }
 
+.post-card h2,
 .post-card h3 {
-  margin: 4px 0 8px;
+  margin: 5px 0 8px;
+  color: var(--text);
   font-size: 1.3rem;
   font-weight: 700;
   line-height: 1.7;
 }
 
+.post-card h2 a,
 .post-card h3 a {
-  color: var(--color-text);
+  color: var(--text);
 }
 
+.post-card h2 a:hover,
+.post-card h2 a:focus,
 .post-card h3 a:hover,
 .post-card h3 a:focus {
-  color: var(--color-primary);
+  color: var(--primary);
 }
 
 .post-card p:not(.post-meta) {
   margin: 8px 0 13px;
-  color: var(--color-muted);
+  color: var(--muted);
   line-height: 1.95;
 }
 
 .post-meta {
   margin: 0;
-  color: var(--color-muted);
+  color: var(--muted);
   font-size: 0.82rem;
   line-height: 1.6;
 }
@@ -268,7 +279,44 @@ main {
 
 
 /* ---------------------------------------------------------
-   8. Single post
+   8. Breadcrumbs
+   --------------------------------------------------------- */
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 7px;
+
+  max-width: var(--content-width);
+  margin: 0 auto 32px;
+
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.9;
+}
+
+.breadcrumbs a {
+  color: var(--primary);
+}
+
+.breadcrumbs a:hover,
+.breadcrumbs a:focus {
+  color: var(--primary-dark);
+}
+
+.breadcrumb-separator {
+  color: #9aa0a6;
+}
+
+.breadcrumbs [aria-current="page"] {
+  color: var(--muted);
+}
+
+
+/* ---------------------------------------------------------
+   9. Single post
    --------------------------------------------------------- */
 
 .post {
@@ -278,13 +326,13 @@ main {
 }
 
 .post-header {
-  margin-bottom: 42px;
+  margin-bottom: 36px;
   text-align: center;
 }
 
 .post-header h1 {
   margin: 8px 0 12px;
-  color: var(--color-text);
+  color: var(--text);
   font-size: 2.25rem;
   font-weight: 700;
   line-height: 1.6;
@@ -293,12 +341,12 @@ main {
 .post-description {
   max-width: 650px;
   margin: 0 auto;
-  color: var(--color-muted);
+  color: var(--muted);
   line-height: 2;
 }
 
 .post-content {
-  color: var(--color-text);
+  color: var(--text);
   font-size: 1.04rem;
   line-height: 2.1;
 }
@@ -308,7 +356,7 @@ main {
 .post-content h4 {
   margin-top: 38px;
   margin-bottom: 15px;
-  color: var(--color-text);
+  color: var(--text);
   font-weight: 700;
   line-height: 1.65;
 }
@@ -351,7 +399,7 @@ main {
   height: 1px;
   margin: 35px 0;
   border: 0;
-  background: var(--color-border);
+  background: var(--border);
 }
 
 .post-content strong {
@@ -364,7 +412,209 @@ main {
 
 
 /* ---------------------------------------------------------
-   9. Images
+   10. Category page
+   --------------------------------------------------------- */
+
+.category-page {
+  max-width: var(--content-width);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.category-header {
+  margin-bottom: 42px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--border);
+}
+
+.category-header .breadcrumbs {
+  margin-right: 0;
+  margin-left: 0;
+  margin-bottom: 28px;
+}
+
+.archive-label {
+  margin: 0 0 8px;
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.category-header h1 {
+  margin: 0 0 12px;
+  color: var(--text);
+  font-size: 2.15rem;
+  line-height: 1.6;
+}
+
+.category-header p:not(.archive-label) {
+  margin: 0;
+  color: var(--muted);
+  line-height: 2;
+}
+
+.category-post-list {
+  display: block;
+}
+
+
+/* ---------------------------------------------------------
+   11. Archive cards
+   --------------------------------------------------------- */
+
+.archive-page {
+  max-width: var(--content-width);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.archive-header {
+  margin-bottom: 38px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.archive-header h1 {
+  margin: 0 0 12px;
+  color: var(--text);
+  font-size: 2.1rem;
+  line-height: 1.6;
+}
+
+.archive-header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.archive-card {
+  margin-bottom: 18px;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.archive-card h2 {
+  margin: 5px 0 8px;
+  font-size: 1.3rem;
+  line-height: 1.7;
+}
+
+.archive-card h2 a {
+  color: var(--text);
+}
+
+.archive-card h2 a:hover,
+.archive-card h2 a:focus {
+  color: var(--primary);
+}
+
+.archive-card p:not(.post-meta) {
+  margin: 8px 0 13px;
+  color: var(--muted);
+  line-height: 1.95;
+}
+
+
+/* ---------------------------------------------------------
+   12. Related posts
+   --------------------------------------------------------- */
+
+.related-posts {
+  margin-top: 54px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.related-posts h2 {
+  margin: 0 0 23px;
+  color: var(--text);
+  font-size: 1.4rem;
+  line-height: 1.6;
+}
+
+.related-posts-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.related-post-card {
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.related-post-card h3 {
+  margin: 5px 0 8px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.related-post-card h3 a {
+  color: var(--text);
+}
+
+.related-post-card h3 a:hover,
+.related-post-card h3 a:focus {
+  color: var(--primary);
+}
+
+.related-post-card p:not(.post-meta) {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.9;
+}
+
+
+/* ---------------------------------------------------------
+   13. Taxonomy index pages
+   --------------------------------------------------------- */
+
+.taxonomy-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.taxonomy-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 16px 18px;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+
+  color: var(--text);
+}
+
+.taxonomy-card:hover,
+.taxonomy-card:focus {
+  background: var(--primary-light);
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.taxonomy-card span {
+  font-weight: 700;
+}
+
+.taxonomy-card small {
+  color: var(--muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+
+/* ---------------------------------------------------------
+   14. Images
    --------------------------------------------------------- */
 
 .post-content img {
@@ -381,21 +631,21 @@ main {
 
 .post-content figcaption {
   margin-top: 8px;
-  color: var(--color-muted);
+  color: var(--muted);
   font-size: 0.86rem;
   text-align: center;
 }
 
 
 /* ---------------------------------------------------------
-   10. Blockquotes
+   15. Blockquotes
    --------------------------------------------------------- */
 
 .post-content blockquote {
   margin: 25px 0;
   padding: 14px 18px;
-  background: var(--color-light-blue);
-  border-right: 4px solid var(--color-primary);
+  background: var(--primary-light);
+  border-right: 4px solid var(--primary);
   color: #4c5660;
 }
 
@@ -405,13 +655,14 @@ main {
 
 
 /* ---------------------------------------------------------
-   11. Code blocks
+   16. Code
    --------------------------------------------------------- */
 
 .post-content code {
   padding: 2px 5px;
   background: #eeeeee;
   border-radius: 4px;
+
   direction: ltr;
   font-family: Consolas, "Courier New", monospace;
   font-size: 0.9em;
@@ -422,15 +673,18 @@ main {
   margin: 25px 0;
   padding: 16px;
   overflow-x: auto;
-  background: var(--color-code-background);
+
+  background: var(--code-background);
   border-radius: 7px;
   color: #f5f5f5;
+
   direction: ltr;
   font-family: Consolas, "Courier New", monospace;
   font-size: 0.9rem;
   line-height: 1.7;
   text-align: left;
   white-space: pre;
+
   -webkit-overflow-scrolling: touch;
 }
 
@@ -443,7 +697,7 @@ main {
 
 
 /* ---------------------------------------------------------
-   12. Tables
+   17. Tables
    --------------------------------------------------------- */
 
 .post-content table {
@@ -451,8 +705,10 @@ main {
   width: 100%;
   margin: 25px 0;
   overflow-x: auto;
+
   border-collapse: collapse;
   border-spacing: 0;
+
   -webkit-overflow-scrolling: touch;
 }
 
@@ -460,53 +716,36 @@ main {
 .post-content td {
   min-width: 130px;
   padding: 10px 12px;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--border);
   text-align: right;
   vertical-align: top;
 }
 
 .post-content th {
-  background: var(--color-light-blue);
+  background: var(--primary-light);
   font-weight: 700;
 }
 
 
 /* ---------------------------------------------------------
-   13. Tags
-   --------------------------------------------------------- */
-
-.post-tags {
-  margin-top: 42px;
-  padding-top: 20px;
-  border-top: 1px solid var(--color-border);
-  color: var(--color-muted);
-  font-size: 0.9rem;
-  line-height: 1.8;
-}
-
-.post-tags span {
-  display: inline-block;
-  margin-left: 10px;
-}
-
-
-/* ---------------------------------------------------------
-   14. 404 page
+   18. 404 page
    --------------------------------------------------------- */
 
 .error-page {
   max-width: 620px;
   margin: 60px auto;
   padding: 48px 24px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius);
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+
   text-align: center;
 }
 
 .error-code {
   margin: 0;
-  color: var(--color-primary);
+  color: var(--primary);
   font-size: 5rem;
   font-weight: 700;
   line-height: 1.2;
@@ -514,7 +753,7 @@ main {
 
 .error-page h1 {
   margin: 12px 0;
-  color: var(--color-text);
+  color: var(--text);
   font-size: 1.8rem;
   line-height: 1.6;
 }
@@ -522,7 +761,7 @@ main {
 .error-page p:not(.error-code) {
   max-width: 480px;
   margin: 0 auto 25px;
-  color: var(--color-muted);
+  color: var(--muted);
   line-height: 2;
 }
 
@@ -537,16 +776,18 @@ main {
 .button {
   display: inline-block;
   padding: 8px 18px;
+
+  background: var(--primary);
   border-radius: 5px;
-  background: var(--color-primary);
   color: #ffffff;
+
   font-size: 0.92rem;
   line-height: 1.8;
 }
 
 .button:hover,
 .button:focus {
-  background: var(--color-primary-dark);
+  background: var(--primary-dark);
   color: #ffffff;
   text-decoration: none;
 }
@@ -557,14 +798,16 @@ main {
 
 
 /* ---------------------------------------------------------
-   15. Footer
+   19. Footer
    --------------------------------------------------------- */
 
 .site-footer {
   padding: 24px 0;
-  background: var(--color-surface);
-  border-top: 1px solid var(--color-border);
-  color: var(--color-muted);
+
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+
   font-size: 0.82rem;
   text-align: center;
 }
@@ -576,7 +819,7 @@ main {
 
 
 /* ---------------------------------------------------------
-   16. Responsive styles
+   20. Responsive layout
    --------------------------------------------------------- */
 
 @media (max-width: 700px) {
@@ -605,6 +848,7 @@ main {
     flex-direction: column;
     justify-content: center;
     gap: 10px;
+
     padding-top: 14px;
     padding-bottom: 14px;
   }
@@ -617,7 +861,8 @@ main {
     font-size: 1.7rem;
   }
 
-  .post-card {
+  .post-card,
+  .archive-card {
     padding: 19px;
   }
 
@@ -642,6 +887,16 @@ main {
     font-size: 1.2rem;
   }
 
+  .category-header h1,
+  .archive-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .taxonomy-list,
+  .related-posts-list {
+    grid-template-columns: 1fr;
+  }
+
   .error-page {
     margin-top: 30px;
     padding: 35px 18px;
@@ -658,7 +913,6 @@ main {
   }
 
   .site-nav {
-    flex-wrap: wrap;
     gap: 10px 14px;
   }
 
@@ -666,14 +920,20 @@ main {
     font-size: 1.55rem;
   }
 
-  .post-card h3 {
+  .post-card h2,
+  .post-card h3,
+  .archive-card h2 {
     font-size: 1.15rem;
+  }
+
+  .breadcrumbs {
+    font-size: 0.8rem;
   }
 }
 
 
 /* ---------------------------------------------------------
-   17. Print styles
+   21. Print
    --------------------------------------------------------- */
 
 @media print {
@@ -687,6 +947,7 @@ main {
   .site-footer,
   .site-nav,
   .read-more,
+  .related-posts,
   .error-actions {
     display: none;
   }
@@ -697,7 +958,9 @@ main {
   }
 
   .container,
-  .post {
+  .post,
+  .category-page,
+  .archive-page {
     width: 100%;
     max-width: none;
   }
@@ -716,7 +979,7 @@ main {
 
 
 /* ---------------------------------------------------------
-   18. Reduced motion
+   22. Reduced motion
    --------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
