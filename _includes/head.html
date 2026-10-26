@@ -53,12 +53,14 @@
 <meta property="article:author" content="{{ page.author | default: site.author.name | escape }}">
 {% if page.categories.size > 0 %}
 {% assign primary_slug_h = page.categories[0] %}
-{% capture primary_display %}{% include category-name.html slug=primary_slug_h %}{% endcapture %}
-<meta property="article:section" content="{{ primary_display | strip | escape }}">
+{% assign primary_page_h = site.pages | where: "category", primary_slug_h | first %}
+{% assign primary_display_h = primary_page_h.title | default: primary_slug_h %}
+<meta property="article:section" content="{{ primary_display_h | escape }}">
 {% endif %}
-{% for cat_slug in page.categories %}
-{% capture cat_display %}{% include category-name.html slug=cat_slug %}{% endcapture %}
-<meta property="article:tag" content="{{ cat_display | strip | escape }}">
+{% for cat_slug_h in page.categories %}
+{% assign cat_page_h = site.pages | where: "category", cat_slug_h | first %}
+{% assign cat_display_h = cat_page_h.title | default: cat_slug_h %}
+<meta property="article:tag" content="{{ cat_display_h | escape }}">
 {% endfor %}
 {% endif %}
 
