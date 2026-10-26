@@ -1,30 +1,33 @@
 {% if page.layout == 'post' %}
-<nav aria-label="breadcrumb" class="mb-4">
+{% assign primary = "" %}
+{% if page.categories.size > 0 %}
+  {% assign primary = page.categories[0] %}
+{% elsif page.tags.size > 0 %}
+  {% assign primary = page.tags[0] %}
+{% endif %}
+
+<nav aria-label="مسیر صفحه" class="mb-4">
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      <a href="{{ '/' | relative_url }}"><i class="bi bi-house-door"></i> خانه</a>
+      <a href="{{ '/' | relative_url }}"><i class="bi bi-house-door" aria-hidden="true"></i> خانه</a>
     </li>
     <li class="breadcrumb-item">
       <a href="{{ '/blog/' | relative_url }}">وبلاگ</a>
     </li>
-    {% if page.tags.size > 0 %}
+    {% if primary != "" %}
     <li class="breadcrumb-item">
-      <a href="{{ '/blog/' | relative_url }}#{{ page.tags[0] | slugify }}">{{ page.tags[0] }}</a>
+      <a href="{{ '/' | append: (primary | slugify) | append: '/' | relative_url }}">{{ primary }}</a>
     </li>
     {% endif %}
     <li class="breadcrumb-item active" aria-current="page">{{ page.title | truncate: 50 }}</li>
   </ol>
 </nav>
 
-{% if page.tags.size > 0 %}
-  {% assign tag_slug = page.tags[0] | slugify %}
-  {% capture tag_absolute_url %}{{ '/blog/' | absolute_url }}#{{ tag_slug }}{% endcapture %}
-{% endif %}
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
+  "@id": {{ page.url | absolute_url | append: '#breadcrumb' | jsonify }},
   "itemListElement": [
     {
       "@type": "ListItem",
@@ -37,20 +40,20 @@
       "position": 2,
       "name": "وبلاگ",
       "item": {{ '/blog/' | absolute_url | jsonify }}
-    },
-    {% if page.tags.size > 0 %}
+    }
+    {% if primary != "" %},
     {
       "@type": "ListItem",
       "position": 3,
-      "name": {{ page.tags[0] | jsonify }},
-      "item": {{ tag_absolute_url | jsonify }}
+      "name": {{ primary | jsonify }},
+      "item": {{ '/' | absolute_url | append: (primary | slugify) | append: '/' | jsonify }}
     },
     {
       "@type": "ListItem",
       "position": 4,
       "name": {{ page.title | jsonify }}
     }
-    {% else %}
+    {% else %},
     {
       "@type": "ListItem",
       "position": 3,
@@ -62,10 +65,10 @@
 </script>
 
 {% elsif page.breadcrumb %}
-<nav aria-label="breadcrumb" class="mb-4">
+<nav aria-label="مسیر صفحه" class="mb-4">
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      <a href="{{ '/' | relative_url }}"><i class="bi bi-house-door"></i> خانه</a>
+      <a href="{{ '/' | relative_url }}"><i class="bi bi-house-door" aria-hidden="true"></i> خانه</a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">{{ page.title }}</li>
   </ol>
