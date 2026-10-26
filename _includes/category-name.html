@@ -1,0 +1,6 @@
+{%- assign cat_page = site.pages | where: "category", include.slug | first -%}
+{%- if cat_page and cat_page.title -%}
+  {{- cat_page.title -}}
+{%- else -%}
+  {{- include.slug -}}
+{%- endif -%}
