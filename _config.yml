@@ -1,30 +1,28 @@
-title: "بلاندر"
-description: "بلاندر؛ نقد و بررسی اتفاقات تاریخی"
+title: "ایران لیکس"
+description: "وبلاگ ایران لیکس — تحلیل، بررسی و اخبار فناوری، امنیت و حریم خصوصی"
 url: "https://iranleaks.github.io"
 baseurl: ""
 lang: fa
 dir: rtl
 
 author:
-  name: "احسان چهری"
-  email: "ehsanchehri@gmail.com"
+  name: "Iran Leaks"
+  email: "info@iranleaks.github.io"
 
 logo: "/blog.svg"
 favicon: "/blog.svg"
 
 social:
-  name: "احسان چهری"
-  instagram: "https://instagram.com/ehsanchehri"
-  x: ""
-  facebook: "https://facebook.com/ehsanchehri"
-  youtube: ""
-  linkedin: "https://linkedin.com/in/ehsanchehri"
+  name: "Iran Leaks"
+  instagram: "https://instagram.com/iranleaks"
+  x: "https://x.com/iranleaks"
+  facebook: "https://facebook.com/iranleaks"
+  youtube: "https://youtube.com/@iranleaks"
+  linkedin: "https://linkedin.com/company/iranleaks"
 
 markdown: kramdown
 highlighter: rouge
-
-permalink: /:title/
-
+permalink: /:categories/:title/
 timezone: Asia/Tehran
 
 kramdown:
@@ -33,6 +31,8 @@ kramdown:
   auto_ids: true
   toc_levels: 1..3
   smart_quotes: lsquo,rsquo,ldquo,rdquo
+
+plugins: []
 
 defaults:
   - scope:
