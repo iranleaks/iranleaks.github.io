@@ -19,13 +19,13 @@ breadcrumb: true
       <i class="bi bi-folder" aria-hidden="true"></i> دسته‌بندی‌ها
     </h2>
     <div>
-      {% for category in sorted_categories %}
-      {% assign cat_slug = category[0] %}
-      {% assign cat_name = site.data.categories[cat_slug].title | default: cat_slug %}
+      {% for cat in sorted_categories %}
+      {% assign cat_slug = cat[0] %}
+      {% assign cat_count = cat[1].size %}
       <a href="{{ '/' | append: cat_slug | append: '/' | relative_url }}"
          class="btn btn-sm btn-outline-primary m-1 tag-filter">
-        {{ cat_name }}
-        <span class="badge bg-primary ms-1">{{ category[1].size }}</span>
+        {% include category-name.html slug=cat_slug %}
+        <span class="badge bg-primary ms-1">{{ cat_count }}</span>
       </a>
       {% endfor %}
     </div>
