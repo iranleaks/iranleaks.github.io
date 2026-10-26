@@ -10,8 +10,9 @@
 
 {% assign category_names_arr = "" | split: "" %}
 {% for cat_slug in page.categories %}
-  {% assign cat_name = site.data.categories[cat_slug].title | default: cat_slug %}
-  {% assign category_names_arr = category_names_arr | push: cat_name %}
+  {% capture cat_display %}{% include category-name.html slug=cat_slug %}{% endcapture %}
+  {% assign cat_name_clean = cat_display | strip %}
+  {% assign category_names_arr = category_names_arr | push: cat_name_clean %}
 {% endfor %}
 
 <script type="application/ld+json">
@@ -72,6 +73,17 @@
       "@id": {{ page.url | absolute_url | append: '#webpage' | jsonify }},
       "url": {{ page.url | absolute_url | jsonify }},
       "name": {{ page.title | jsonify }},
+      "isPartOf": { "@id": {{ '/' | absolute_url | append: '#website' | jsonify }} },
+      "inLanguage": "fa-IR",
+      "breadcrumb": { "@id": {{ page.url | absolute_url | append: '#breadcrumb' | jsonify }} }
+    }
+    {% elsif page.layout == 'category' %},
+    {
+      "@type": "CollectionPage",
+      "@id": {{ page.url | absolute_url | append: '#webpage' | jsonify }},
+      "url": {{ page.url | absolute_url | jsonify }},
+      "name": {{ page.title | default: page.category | jsonify }},
+      "description": {{ page.description | default: page.title | default: page.category | jsonify }},
       "isPartOf": { "@id": {{ '/' | absolute_url | append: '#website' | jsonify }} },
       "inLanguage": "fa-IR",
       "breadcrumb": { "@id": {{ page.url | absolute_url | append: '#breadcrumb' | jsonify }} }
