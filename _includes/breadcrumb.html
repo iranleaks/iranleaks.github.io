@@ -1,9 +1,5 @@
 {% if page.layout == 'post' %}
-{% assign primary_slug = "" %}
-{% if page.categories.size > 0 %}
-  {% assign primary_slug = page.categories[0] %}
-{% endif %}
-{% assign primary_name = site.data.categories[primary_slug].title | default: primary_slug %}
+{% assign primary_slug = page.categories[0] %}
 
 <nav aria-label="مسیر صفحه" class="mb-4">
   <ol class="breadcrumb">
@@ -13,12 +9,11 @@
     <li class="breadcrumb-item">
       <a href="{{ '/blog/' | relative_url }}">وبلاگ</a>
     </li>
-    {% if primary_slug != "" %}
+    {% if primary_slug %}
     <li class="breadcrumb-item">
-      <a href="{{ '/' | append: primary_slug | append: '/' | relative_url }}">{{ primary_name }}</a>
+      <a href="{{ '/' | append: primary_slug | append: '/' | relative_url }}">{% include category-name.html slug=primary_slug %}</a>
     </li>
     {% endif %}
-    <li class="breadcrumb-item active" aria-current="page">{{ page.title | truncate: 50 }}</li>
   </ol>
 </nav>
 
@@ -40,25 +35,56 @@
       "name": "وبلاگ",
       "item": {{ '/blog/' | absolute_url | jsonify }}
     }
-    {% if primary_slug != "" %},
+    {% if primary_slug %},
     {
       "@type": "ListItem",
       "position": 3,
-      "name": {{ primary_name | jsonify }},
+      "name": {% capture cat_display %}{% include category-name.html slug=primary_slug %}{% endcapture %}{{ cat_display | strip | jsonify }},
       "item": {{ '/' | absolute_url | append: primary_slug | append: '/' | jsonify }}
+    }
+    {% endif %}
+  ]
+}
+</script>
+
+{% elsif page.layout == 'category' %}
+<nav aria-label="مسیر صفحه" class="mb-4">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="{{ '/' | relative_url }}"><i class="bi bi-house-door" aria-hidden="true"></i> خانه</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="{{ '/blog/' | relative_url }}">وبلاگ</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="{{ page.url | relative_url }}">{{ page.title | default: page.category }}</a>
+    </li>
+  </ol>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "@id": {{ page.url | absolute_url | append: '#breadcrumb' | jsonify }},
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "خانه",
+      "item": {{ '/' | absolute_url | jsonify }}
     },
     {
       "@type": "ListItem",
-      "position": 4,
-      "name": {{ page.title | jsonify }}
-    }
-    {% else %},
+      "position": 2,
+      "name": "وبلاگ",
+      "item": {{ '/blog/' | absolute_url | jsonify }}
+    },
     {
       "@type": "ListItem",
       "position": 3,
-      "name": {{ page.title | jsonify }}
+      "name": {{ page.title | default: page.category | jsonify }}
     }
-    {% endif %}
   ]
 }
 </script>
