@@ -34,17 +34,12 @@ layout: default
           <span><i class="bi bi-clock" aria-hidden="true"></i> {{ read_time }} دقیقه مطالعه</span>
         </div>
 
-        {% if page.categories.size > 0 or page.tags.size > 0 %}
+        {% if page.categories.size > 0 %}
         <div class="mb-3">
-          {% for category in page.categories %}
-          <a href="{{ '/' | append: (category | slugify) | append: '/' | relative_url }}"
-             class="badge bg-primary text-decoration-none me-1">{{ category }}</a>
-          {% endfor %}
-          {% for tag in page.tags %}
-          {% unless page.categories contains tag %}
-          <a href="{{ '/' | append: (tag | slugify) | append: '/' | relative_url }}"
-             class="badge bg-secondary text-decoration-none me-1">{{ tag }}</a>
-          {% endunless %}
+          {% for cat_slug in page.categories %}
+          {% assign cat_name = site.data.categories[cat_slug].title | default: cat_slug %}
+          <a href="{{ '/' | append: cat_slug | append: '/' | relative_url }}"
+             class="badge bg-primary text-decoration-none me-1">{{ cat_name }}</a>
           {% endfor %}
         </div>
         {% endif %}
