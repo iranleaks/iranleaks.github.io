@@ -1,6 +1,0 @@
-{%- assign tag_page = site.pages | where: "tag", include.slug | first -%}
-{%- if tag_page and tag_page.title -%}
-  {{- tag_page.title -}}
-{%- else -%}
-  {{- include.slug -}}
-{%- endif -%}
