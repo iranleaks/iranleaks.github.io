@@ -1,81 +1,73 @@
 ---
 layout: default
 title: وبلاگ
-description: "همه پست‌های بلاندر به تفکیک موضوع"
+description: "همه نوشته‌های وبلاگ ایران لیکس"
 permalink: /blog/
 breadcrumb: true
 ---
+{% assign sorted_categories = site.categories | sort %}
 {% assign sorted_tags = site.tags | sort %}
 
 <div class="container py-4">
   {% include breadcrumb.html %}
 
-  <h1 class="mb-3"><i class="bi bi-journal-text"></i> وبلاگ</h1>
-  <p class="text-muted mb-4">
-    مجموعهٔ تمام نوشته‌ها به تفکیک موضوع. روی هر برچسب کلیک کنید تا به بخش مربوطه بروید.
-  </p>
+  <h1 class="mb-3"><i class="bi bi-journal-text" aria-hidden="true"></i> وبلاگ</h1>
+  <p class="text-muted mb-4">همهٔ نوشته‌ها به ترتیب تاریخ انتشار.</p>
 
-  {% if site.posts.size > 0 %}
-
-    {% if site.tags.size > 0 %}
-    <nav aria-label="فیلتر برچسب‌ها" class="mb-5">
-      {% for tag in sorted_tags %}
-      <a href="#{{ tag[0] | slugify }}"
+  {% if sorted_categories.size > 0 %}
+  <section class="mb-4" aria-labelledby="categories-heading">
+    <h2 id="categories-heading" class="h5 border-bottom pb-2 mb-3">
+      <i class="bi bi-tags" aria-hidden="true"></i> دسته‌بندی‌ها
+    </h2>
+    <div>
+      {% for category in sorted_categories %}
+      <a href="{{ '/' | append: (category[0] | slugify) | append: '/' | relative_url }}"
          class="btn btn-sm btn-outline-primary m-1 tag-filter">
-        {{ tag[0] }}
-        <span class="badge bg-primary ms-1">{{ tag[1].size }}</span>
+        {{ category[0] }}
+        <span class="badge bg-primary ms-1">{{ category[1].size }}</span>
       </a>
       {% endfor %}
-    </nav>
+    </div>
+  </section>
+  {% endif %}
 
-    {% for tag in sorted_tags %}
-    <section id="{{ tag[0] | slugify }}" class="tag-section mb-5">
-      <h2 class="h4 border-bottom pb-2 mb-3">
-        <i class="bi bi-tag"></i> {{ tag[0] }}
-        <span class="badge bg-secondary ms-1">{{ tag[1].size }} مطلب</span>
-      </h2>
-      <div class="row g-3">
-        {% for post in tag[1] %}
-        <div class="col-md-6 col-lg-4">
-          {% include post-card.html post=post %}
-        </div>
-        {% endfor %}
-      </div>
-    </section>
-    {% endfor %}
-    {% endif %}
-
-    {% comment %}
-      بررسی وجود نوشته‌های بدون تگ
-    {% endcomment %}
-    {% assign has_untagged = false %}
-    {% for post in site.posts %}
-      {% if post.tags.size == 0 %}
-        {% assign has_untagged = true %}
-        {% break %}
+  {% if sorted_tags.size > 0 %}
+  <section class="mb-4" aria-labelledby="tags-heading">
+    <h2 id="tags-heading" class="h5 border-bottom pb-2 mb-3">
+      <i class="bi bi-bookmark" aria-hidden="true"></i> برچسب‌ها
+    </h2>
+    <div>
+      {% for tag in sorted_tags %}
+      {% assign show_tag = true %}
+      {% for category in sorted_categories %}
+      {% if category[0] == tag[0] %}
+      {% assign show_tag = false %}
+      {% break %}
       {% endif %}
+      {% endfor %}
+      {% if show_tag %}
+      <a href="{{ '/' | append: (tag[0] | slugify) | append: '/' | relative_url }}"
+         class="btn btn-sm btn-outline-secondary m-1 tag-filter">
+        {{ tag[0] }}
+        <span class="badge bg-secondary ms-1">{{ tag[1].size }}</span>
+      </a>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if site.posts.size > 0 %}
+  <div class="row g-4">
+    {% for post in site.posts %}
+    <div class="col-md-6 col-lg-4">
+      {% include post-card.html post=post %}
+    </div>
     {% endfor %}
-
-    {% if has_untagged %}
-    <section id="untagged" class="tag-section mb-5">
-      <h2 class="h4 border-bottom pb-2 mb-3">
-        <i class="bi bi-question-circle"></i> سایر مطالب
-      </h2>
-      <div class="row g-3">
-        {% for post in site.posts %}
-          {% if post.tags.size == 0 %}
-          <div class="col-md-6 col-lg-4">
-            {% include post-card.html post=post %}
-          </div>
-          {% endif %}
-        {% endfor %}
-      </div>
-    </section>
-    {% endif %}
-
+  </div>
   {% else %}
-  <div class="alert alert-info">
-    <i class="bi bi-info-circle"></i> هنوز نوشته‌ای منتشر نشده است.
+  <div class="alert alert-info" role="alert">
+    <i class="bi bi-info-circle" aria-hidden="true"></i> هنوز نوشته‌ای منتشر نشده است.
   </div>
   {% endif %}
 </div>
