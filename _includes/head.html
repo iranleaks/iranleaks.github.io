@@ -52,10 +52,14 @@
 <meta property="article:modified_time" content="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">
 <meta property="article:author" content="{{ page.author | default: site.author.name | escape }}">
 {% if page.categories.size > 0 %}
-{% assign primary_slug_head = page.categories[0] %}
-{% assign primary_name_head = site.data.categories[primary_slug_head].title | default: primary_slug_head %}
-<meta property="article:section" content="{{ primary_name_head | escape }}">
+{% assign primary_slug_h = page.categories[0] %}
+{% capture primary_display %}{% include category-name.html slug=primary_slug_h %}{% endcapture %}
+<meta property="article:section" content="{{ primary_display | strip | escape }}">
 {% endif %}
+{% for cat_slug in page.categories %}
+{% capture cat_display %}{% include category-name.html slug=cat_slug %}{% endcapture %}
+<meta property="article:tag" content="{{ cat_display | strip | escape }}">
+{% endfor %}
 {% endif %}
 
 <meta name="twitter:card" content="summary_large_image">
