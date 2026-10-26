@@ -6,7 +6,6 @@ permalink: /blog/
 breadcrumb: true
 ---
 {% assign sorted_categories = site.categories | sort %}
-{% assign sorted_tags = site.tags | sort %}
 
 <div class="container py-4">
   {% include breadcrumb.html %}
@@ -17,41 +16,17 @@ breadcrumb: true
   {% if sorted_categories.size > 0 %}
   <section class="mb-4" aria-labelledby="categories-heading">
     <h2 id="categories-heading" class="h5 border-bottom pb-2 mb-3">
-      <i class="bi bi-tags" aria-hidden="true"></i> دسته‌بندی‌ها
+      <i class="bi bi-folder" aria-hidden="true"></i> دسته‌بندی‌ها
     </h2>
     <div>
       {% for category in sorted_categories %}
-      <a href="{{ '/' | append: (category[0] | slugify) | append: '/' | relative_url }}"
+      {% assign cat_slug = category[0] %}
+      {% assign cat_name = site.data.categories[cat_slug].title | default: cat_slug %}
+      <a href="{{ '/' | append: cat_slug | append: '/' | relative_url }}"
          class="btn btn-sm btn-outline-primary m-1 tag-filter">
-        {{ category[0] }}
+        {{ cat_name }}
         <span class="badge bg-primary ms-1">{{ category[1].size }}</span>
       </a>
-      {% endfor %}
-    </div>
-  </section>
-  {% endif %}
-
-  {% if sorted_tags.size > 0 %}
-  <section class="mb-4" aria-labelledby="tags-heading">
-    <h2 id="tags-heading" class="h5 border-bottom pb-2 mb-3">
-      <i class="bi bi-bookmark" aria-hidden="true"></i> برچسب‌ها
-    </h2>
-    <div>
-      {% for tag in sorted_tags %}
-      {% assign show_tag = true %}
-      {% for category in sorted_categories %}
-      {% if category[0] == tag[0] %}
-      {% assign show_tag = false %}
-      {% break %}
-      {% endif %}
-      {% endfor %}
-      {% if show_tag %}
-      <a href="{{ '/' | append: (tag[0] | slugify) | append: '/' | relative_url }}"
-         class="btn btn-sm btn-outline-secondary m-1 tag-filter">
-        {{ tag[0] }}
-        <span class="badge bg-secondary ms-1">{{ tag[1].size }}</span>
-      </a>
-      {% endif %}
       {% endfor %}
     </div>
   </section>
