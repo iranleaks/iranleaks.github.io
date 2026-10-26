@@ -1,5 +1,7 @@
 {% if page.layout == 'post' %}
 {% assign primary_slug = page.categories[0] %}
+{% assign primary_page = site.pages | where: "category", primary_slug | first %}
+{% assign primary_name = primary_page.title | default: primary_slug %}
 
 <nav aria-label="مسیر صفحه" class="mb-4">
   <ol class="breadcrumb">
@@ -11,7 +13,7 @@
     </li>
     {% if primary_slug %}
     <li class="breadcrumb-item">
-      <a href="{{ '/' | append: primary_slug | append: '/' | relative_url }}">{% include category-name.html slug=primary_slug %}</a>
+      <a href="{{ '/' | append: primary_slug | append: '/' | relative_url }}">{{ primary_name }}</a>
     </li>
     {% endif %}
   </ol>
@@ -34,15 +36,13 @@
       "position": 2,
       "name": "وبلاگ",
       "item": {{ '/blog/' | absolute_url | jsonify }}
-    }
-    {% if primary_slug %},
+    }{% if primary_slug %},
     {
       "@type": "ListItem",
       "position": 3,
-      "name": {% capture cat_display %}{% include category-name.html slug=primary_slug %}{% endcapture %}{{ cat_display | strip | jsonify }},
+      "name": {{ primary_name | jsonify }},
       "item": {{ '/' | absolute_url | append: primary_slug | append: '/' | jsonify }}
-    }
-    {% endif %}
+    }{% endif %}
   ]
 }
 </script>
