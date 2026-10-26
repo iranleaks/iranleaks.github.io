@@ -11,7 +11,7 @@ layout: default
 
         <div class="text-muted d-flex flex-wrap gap-3 mb-3 small">
           <span>
-            <i class="bi bi-calendar3"></i>
+            <i class="bi bi-calendar3" aria-hidden="true"></i>
             <time datetime="{{ page.date | date_to_xmlschema }}">
               {% include date-fa.html date=page.date %}
             </time>
@@ -19,7 +19,7 @@ layout: default
 
           {% if page.last_modified_at and page.last_modified_at != page.date %}
           <span>
-            <i class="bi bi-clock-history"></i>
+            <i class="bi bi-clock-history" aria-hidden="true"></i>
             آخرین به‌روزرسانی:
             <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">
               {% include date-fa.html date=page.last_modified_at %}
@@ -27,18 +27,24 @@ layout: default
           </span>
           {% endif %}
 
-          <span><i class="bi bi-person"></i> {{ page.author | default: site.author.name }}</span>
+          <span><i class="bi bi-person" aria-hidden="true"></i> {{ page.author | default: site.author.name }}</span>
 
           {% assign words = content | strip_html | number_of_words %}
           {% assign read_time = words | divided_by: 200 | plus: 1 %}
-          <span><i class="bi bi-clock"></i> {{ read_time }} دقیقه مطالعه</span>
+          <span><i class="bi bi-clock" aria-hidden="true"></i> {{ read_time }} دقیقه مطالعه</span>
         </div>
 
-        {% if page.tags.size > 0 %}
+        {% if page.categories.size > 0 or page.tags.size > 0 %}
         <div class="mb-3">
+          {% for category in page.categories %}
+          <a href="{{ '/' | append: (category | slugify) | append: '/' | relative_url }}"
+             class="badge bg-primary text-decoration-none me-1">{{ category }}</a>
+          {% endfor %}
           {% for tag in page.tags %}
-          <a href="{{ '/blog/' | relative_url }}#{{ tag | slugify }}"
+          {% unless page.categories contains tag %}
+          <a href="{{ '/' | append: (tag | slugify) | append: '/' | relative_url }}"
              class="badge bg-secondary text-decoration-none me-1">{{ tag }}</a>
+          {% endunless %}
           {% endfor %}
         </div>
         {% endif %}
@@ -55,29 +61,35 @@ layout: default
 
       <hr class="my-5">
 
-      <div class="share-buttons mb-5">
-        <h5 class="mb-3"><i class="bi bi-share"></i> اشتراک‌گذاری</h5>
+      <section class="share-buttons mb-5" aria-labelledby="share-heading">
+        <h2 id="share-heading" class="h5 mb-3">
+          <i class="bi bi-share" aria-hidden="true"></i> اشتراک‌گذاری
+        </h2>
         <a href="https://twitter.com/intent/tweet?url={{ page.url | absolute_url | url_encode }}&text={{ page.title | url_encode }}"
            target="_blank" rel="noopener noreferrer"
-           class="btn btn-outline-dark btn-sm me-1 mb-1">
-          <i class="bi bi-twitter-x"></i> توییتر
+           class="btn btn-outline-dark btn-sm me-1 mb-1"
+           aria-label="اشتراک‌گذاری در توییتر">
+          <i class="bi bi-twitter-x" aria-hidden="true"></i> توییتر
         </a>
         <a href="https://t.me/share/url?url={{ page.url | absolute_url | url_encode }}&text={{ page.title | url_encode }}"
            target="_blank" rel="noopener noreferrer"
-           class="btn btn-outline-primary btn-sm me-1 mb-1">
-          <i class="bi bi-telegram"></i> تلگرام
+           class="btn btn-outline-primary btn-sm me-1 mb-1"
+           aria-label="اشتراک‌گذاری در تلگرام">
+          <i class="bi bi-telegram" aria-hidden="true"></i> تلگرام
         </a>
         <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ page.url | absolute_url | url_encode }}"
            target="_blank" rel="noopener noreferrer"
-           class="btn btn-outline-info btn-sm me-1 mb-1">
-          <i class="bi bi-linkedin"></i> لینکدین
+           class="btn btn-outline-info btn-sm me-1 mb-1"
+           aria-label="اشتراک‌گذاری در لینکدین">
+          <i class="bi bi-linkedin" aria-hidden="true"></i> لینکدین
         </a>
         <a href="https://wa.me/?text={{ page.title | url_encode }}%20{{ page.url | absolute_url | url_encode }}"
            target="_blank" rel="noopener noreferrer"
-           class="btn btn-outline-success btn-sm mb-1">
-          <i class="bi bi-whatsapp"></i> واتس‌اپ
+           class="btn btn-outline-success btn-sm mb-1"
+           aria-label="اشتراک‌گذاری در واتس‌اپ">
+          <i class="bi bi-whatsapp" aria-hidden="true"></i> واتس‌اپ
         </a>
-      </div>
+      </section>
 
       {% include related-posts.html %}
     </div>
