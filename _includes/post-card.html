@@ -11,9 +11,8 @@
     {% if post.categories.size > 0 %}
     <div class="mb-2 post-card-tags">
       {% for cat_slug in post.categories %}
-      {% assign cat_name = site.data.categories[cat_slug].title | default: cat_slug %}
       <a href="{{ '/' | append: cat_slug | append: '/' | relative_url }}"
-         class="badge bg-primary text-decoration-none me-1">{{ cat_name }}</a>
+         class="badge bg-primary text-decoration-none me-1">{% include category-name.html slug=cat_slug %}</a>
       {% endfor %}
     </div>
     {% endif %}
