@@ -23,7 +23,7 @@ social:
 markdown: kramdown
 highlighter: rouge
 
-permalink: /:categories/:title/
+permalink: /:title/
 
 timezone: Asia/Tehran
 
