@@ -1,9 +1,6 @@
 {% assign og_image = page.image | default: site.logo %}
 {% assign meta_desc_clean = page.description | default: page.excerpt | default: site.description | strip_html | strip_newlines | normalize_whitespace %}
 
-{% assign social_arr = "" | split: "" %}
-{% if site.social.instagram and site.social.instagram != "" %}{% assign social_arr = social_arr | concat: (site.social.instagram | split: "@@@@@" | slice: 0) %}{% endif %}
-
 {% assign keywords_str = "" %}
 {% for cat_slug_sd in page.categories %}
   {% assign cat_page_sd = site.pages | where: "category", cat_slug_sd | first %}
@@ -27,16 +24,14 @@
       "logo": {
         "@type": "ImageObject",
         "url": {{ site.logo | absolute_url | jsonify }}
-      }
-      {% if site.social.instagram and site.social.instagram != "" %},
+      },
       "sameAs": [
-        {% if site.social.instagram %}{{ site.social.instagram | jsonify }}{% endif %}
-        {% if site.social.x %},{{ site.social.x | jsonify }}{% endif %}
-        {% if site.social.facebook %},{{ site.social.facebook | jsonify }}{% endif %}
-        {% if site.social.youtube %},{{ site.social.youtube | jsonify }}{% endif %}
-        {% if site.social.linkedin %},{{ site.social.linkedin | jsonify }}{% endif %}
+        {% if site.social.instagram and site.social.instagram != "" %}{{ site.social.instagram | jsonify }},{% endif %}
+        {% if site.social.x and site.social.x != "" %}{{ site.social.x | jsonify }},{% endif %}
+        {% if site.social.facebook and site.social.facebook != "" %}{{ site.social.facebook | jsonify }},{% endif %}
+        {% if site.social.youtube and site.social.youtube != "" %}{{ site.social.youtube | jsonify }},{% endif %}
+        {% if site.social.linkedin and site.social.linkedin != "" %}{{ site.social.linkedin | jsonify }}{% endif %}
       ]
-      {% endif %}
     },
     {
       "@type": "WebSite",
