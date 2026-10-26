@@ -1,10 +1,9 @@
 {% if page.layout == 'post' %}
-{% assign primary = "" %}
+{% assign primary_slug = "" %}
 {% if page.categories.size > 0 %}
-  {% assign primary = page.categories[0] %}
-{% elsif page.tags.size > 0 %}
-  {% assign primary = page.tags[0] %}
+  {% assign primary_slug = page.categories[0] %}
 {% endif %}
+{% assign primary_name = site.data.categories[primary_slug].title | default: primary_slug %}
 
 <nav aria-label="مسیر صفحه" class="mb-4">
   <ol class="breadcrumb">
@@ -14,9 +13,9 @@
     <li class="breadcrumb-item">
       <a href="{{ '/blog/' | relative_url }}">وبلاگ</a>
     </li>
-    {% if primary != "" %}
+    {% if primary_slug != "" %}
     <li class="breadcrumb-item">
-      <a href="{{ '/' | append: (primary | slugify) | append: '/' | relative_url }}">{{ primary }}</a>
+      <a href="{{ '/' | append: primary_slug | append: '/' | relative_url }}">{{ primary_name }}</a>
     </li>
     {% endif %}
     <li class="breadcrumb-item active" aria-current="page">{{ page.title | truncate: 50 }}</li>
@@ -41,12 +40,12 @@
       "name": "وبلاگ",
       "item": {{ '/blog/' | absolute_url | jsonify }}
     }
-    {% if primary != "" %},
+    {% if primary_slug != "" %},
     {
       "@type": "ListItem",
       "position": 3,
-      "name": {{ primary | jsonify }},
-      "item": {{ '/' | absolute_url | append: (primary | slugify) | append: '/' | jsonify }}
+      "name": {{ primary_name | jsonify }},
+      "item": {{ '/' | absolute_url | append: primary_slug | append: '/' | jsonify }}
     },
     {
       "@type": "ListItem",
