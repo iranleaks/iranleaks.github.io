@@ -1,62 +1,116 @@
-{% if page.layout == 'post' %}
+{% assign og_image = page.image | default: site.logo %}
+{% assign meta_desc_clean = page.description | default: page.excerpt | default: site.description | strip_html | strip_newlines | normalize_whitespace %}
+
+{% assign social_arr = "" | split: "" %}
+{% if site.social.instagram and site.social.instagram != "" %}{% assign social_arr = social_arr | push: site.social.instagram %}{% endif %}
+{% if site.social.x and site.social.x != "" %}{% assign social_arr = social_arr | push: site.social.x %}{% endif %}
+{% if site.social.facebook and site.social.facebook != "" %}{% assign social_arr = social_arr | push: site.social.facebook %}{% endif %}
+{% if site.social.youtube and site.social.youtube != "" %}{% assign social_arr = social_arr | push: site.social.youtube %}{% endif %}
+{% if site.social.linkedin and site.social.linkedin != "" %}{% assign social_arr = social_arr | push: site.social.linkedin %}{% endif %}
+
+{% assign category_names_arr = "" | split: "" %}
+{% for cat_slug in page.categories %}
+  {% assign cat_name = site.data.categories[cat_slug].title | default: cat_slug %}
+  {% assign category_names_arr = category_names_arr | push: cat_name %}
+{% endfor %}
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": {{ page.title | jsonify }},
-  "description": {{ meta_desc | jsonify }},
-  "image": {
-    "@type": "ImageObject",
-    "url": {{ page.image | default: site.logo | absolute_url | jsonify }}
-  },
-  "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
-  "dateModified": {{ page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
-  "author": {
-    "@type": "Person",
-    "name": {{ page.author | default: site.author.name | jsonify }}
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": {{ site.title | jsonify }},
-    "logo": {
-      "@type": "ImageObject",
-      "url": {{ site.logo | absolute_url | jsonify }}
-    }
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": {{ page.url | absolute_url | jsonify }}
-  },
-  "url": {{ page.url | absolute_url | jsonify }},
-  {% if page.tags %}"keywords": {{ page.tags | join: ", " | jsonify }},{% endif %}
-  "inLanguage": "fa-IR"
-}
-</script>
-{% else %}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": {{ site.title | jsonify }},
-  "url": {{ '/' | absolute_url | jsonify }},
-  "description": {{ site.description | jsonify }},
-  "inLanguage": "fa-IR",
-  "publisher": {
-    "@type": "Organization",
-    "name": {{ site.title | jsonify }},
-    "logo": {
-      "@type": "ImageObject",
-      "url": {{ site.logo | absolute_url | jsonify }}
-    }
-  },
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": {
-      "@type": "EntryPoint",
-      "urlTemplate": "{{ '/search/' | absolute_url }}?q={search_term_string}"
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": {{ '/' | absolute_url | append: '#organization' | jsonify }},
+      "name": {{ site.title | jsonify }},
+      "url": {{ '/' | absolute_url | jsonify }},
+      "logo": {
+        "@type": "ImageObject",
+        "url": {{ site.logo | absolute_url | jsonify }}
+      },
+      "sameAs": {{ social_arr | jsonify }}
     },
-    "query-input": "required name=search_term_string"
-  }
+    {
+      "@type": "WebSite",
+      "@id": {{ '/' | absolute_url | append: '#website' | jsonify }},
+      "url": {{ '/' | absolute_url | jsonify }},
+      "name": {{ site.title | jsonify }},
+      "description": {{ site.description | jsonify }},
+      "inLanguage": "fa-IR",
+      "publisher": { "@id": {{ '/' | absolute_url | append: '#organization' | jsonify }} },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": {{ '/search/' | absolute_url | append: '?q={search_term_string}' | jsonify }}
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    {% if page.layout == 'post' %},
+    {
+      "@type": "BlogPosting",
+      "@id": {{ page.url | absolute_url | append: '#article' | jsonify }},
+      "headline": {{ page.title | jsonify }},
+      "description": {{ meta_desc_clean | truncate: 200 | jsonify }},
+      "image": {{ og_image | absolute_url | jsonify }},
+      "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+      "dateModified": {{ page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
+      "author": {
+        "@type": "Person",
+        "name": {{ page.author | default: site.author.name | jsonify }}
+      },
+      "publisher": { "@id": {{ '/' | absolute_url | append: '#organization' | jsonify }} },
+      "mainEntityOfPage": { "@id": {{ page.url | absolute_url | append: '#webpage' | jsonify }} },
+      "isPartOf": { "@id": {{ '/' | absolute_url | append: '#website' | jsonify }} },
+      "inLanguage": "fa-IR"
+      {% if category_names_arr.size > 0 %},
+      "keywords": {{ category_names_arr | join: ", " | jsonify }}
+      {% endif %}
+    },
+    {
+      "@type": "WebPage",
+      "@id": {{ page.url | absolute_url | append: '#webpage' | jsonify }},
+      "url": {{ page.url | absolute_url | jsonify }},
+      "name": {{ page.title | jsonify }},
+      "isPartOf": { "@id": {{ '/' | absolute_url | append: '#website' | jsonify }} },
+      "inLanguage": "fa-IR",
+      "breadcrumb": { "@id": {{ page.url | absolute_url | append: '#breadcrumb' | jsonify }} }
+    }
+    {% elsif page.url == '/blog/' %},
+    {
+      "@type": "CollectionPage",
+      "@id": {{ page.url | absolute_url | append: '#webpage' | jsonify }},
+      "url": {{ page.url | absolute_url | jsonify }},
+      "name": {{ page.title | jsonify }},
+      "description": {{ meta_desc_clean | truncate: 200 | jsonify }},
+      "isPartOf": { "@id": {{ '/' | absolute_url | append: '#website' | jsonify }} },
+      "inLanguage": "fa-IR",
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListOrder": "https://schema.org/ItemListOrderDescending",
+        "numberOfItems": {{ site.posts.size }},
+        "itemListElement": [
+          {% for post in site.posts limit: 20 %}
+          {
+            "@type": "ListItem",
+            "position": {{ forloop.index }},
+            "url": {{ post.url | absolute_url | jsonify }},
+            "name": {{ post.title | jsonify }}
+          }{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        ]
+      }
+    }
+    {% else %},
+    {
+      "@type": "WebPage",
+      "@id": {{ page.url | absolute_url | append: '#webpage' | jsonify }},
+      "url": {{ page.url | absolute_url | jsonify }},
+      "name": {{ page.title | default: site.title | jsonify }},
+      "isPartOf": { "@id": {{ '/' | absolute_url | append: '#website' | jsonify }} },
+      "inLanguage": "fa-IR"
+    }
+    {% endif %}
+  ]
 }
 </script>
-{% endif %}
