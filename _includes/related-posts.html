@@ -1,14 +1,10 @@
-{% comment %}
-  نوشته‌های مرتبط بر اساس تگ‌های مشترک
-{% endcomment %}
-{% assign related_count = 0 %}
 {% assign has_related = false %}
 
 {% for post in site.posts %}
   {% if post.url == page.url %}{% continue %}{% endif %}
   {% assign match = false %}
-  {% for tag in page.tags %}
-    {% if post.tags contains tag %}
+  {% for cat in page.categories %}
+    {% if post.categories contains cat %}
       {% assign match = true %}
       {% break %}
     {% endif %}
@@ -21,23 +17,21 @@
 
 {% if has_related %}
 <section class="related-posts mt-5" aria-labelledby="related-heading">
-  <h3 id="related-heading" class="mb-4 border-bottom pb-2">
-    <i class="bi bi-link-45deg"></i> مطالب مرتبط
-  </h3>
+  <h2 id="related-heading" class="h4 mb-4 border-bottom pb-2">
+    <i class="bi bi-link-45deg" aria-hidden="true"></i> مطالب مرتبط
+  </h2>
   <div class="row g-3">
     {% assign related_count = 0 %}
     {% for post in site.posts %}
       {% if related_count >= 3 %}{% break %}{% endif %}
       {% if post.url == page.url %}{% continue %}{% endif %}
-
       {% assign match = false %}
-      {% for tag in page.tags %}
-        {% if post.tags contains tag %}
+      {% for cat in page.categories %}
+        {% if post.categories contains cat %}
           {% assign match = true %}
           {% break %}
         {% endif %}
       {% endfor %}
-
       {% if match %}
       <div class="col-md-4">
         {% include post-card.html post=post %}
