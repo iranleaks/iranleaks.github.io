@@ -2,17 +2,17 @@
 {% assign meta_desc_clean = page.description | default: page.excerpt | default: site.description | strip_html | strip_newlines | normalize_whitespace %}
 
 {% assign social_arr = "" | split: "" %}
-{% if site.social.instagram and site.social.instagram != "" %}{% assign social_arr = social_arr | push: site.social.instagram %}{% endif %}
-{% if site.social.x and site.social.x != "" %}{% assign social_arr = social_arr | push: site.social.x %}{% endif %}
-{% if site.social.facebook and site.social.facebook != "" %}{% assign social_arr = social_arr | push: site.social.facebook %}{% endif %}
-{% if site.social.youtube and site.social.youtube != "" %}{% assign social_arr = social_arr | push: site.social.youtube %}{% endif %}
-{% if site.social.linkedin and site.social.linkedin != "" %}{% assign social_arr = social_arr | push: site.social.linkedin %}{% endif %}
+{% if site.social.instagram and site.social.instagram != "" %}{% assign social_arr = social_arr | concat: (site.social.instagram | split: "@@@@@" | slice: 0) %}{% endif %}
 
-{% assign category_names_arr = "" | split: "" %}
-{% for cat_slug in page.categories %}
-  {% capture cat_display %}{% include category-name.html slug=cat_slug %}{% endcapture %}
-  {% assign cat_name_clean = cat_display | strip %}
-  {% assign category_names_arr = category_names_arr | push: cat_name_clean %}
+{% assign keywords_str = "" %}
+{% for cat_slug_sd in page.categories %}
+  {% assign cat_page_sd = site.pages | where: "category", cat_slug_sd | first %}
+  {% assign cat_title_sd = cat_page_sd.title | default: cat_slug_sd %}
+  {% if forloop.first %}
+    {% assign keywords_str = cat_title_sd %}
+  {% else %}
+    {% assign keywords_str = keywords_str | append: ", " | append: cat_title_sd %}
+  {% endif %}
 {% endfor %}
 
 <script type="application/ld+json">
@@ -27,8 +27,16 @@
       "logo": {
         "@type": "ImageObject",
         "url": {{ site.logo | absolute_url | jsonify }}
-      },
-      "sameAs": {{ social_arr | jsonify }}
+      }
+      {% if site.social.instagram and site.social.instagram != "" %},
+      "sameAs": [
+        {% if site.social.instagram %}{{ site.social.instagram | jsonify }}{% endif %}
+        {% if site.social.x %},{{ site.social.x | jsonify }}{% endif %}
+        {% if site.social.facebook %},{{ site.social.facebook | jsonify }}{% endif %}
+        {% if site.social.youtube %},{{ site.social.youtube | jsonify }}{% endif %}
+        {% if site.social.linkedin %},{{ site.social.linkedin | jsonify }}{% endif %}
+      ]
+      {% endif %}
     },
     {
       "@type": "WebSite",
@@ -64,8 +72,8 @@
       "mainEntityOfPage": { "@id": {{ page.url | absolute_url | append: '#webpage' | jsonify }} },
       "isPartOf": { "@id": {{ '/' | absolute_url | append: '#website' | jsonify }} },
       "inLanguage": "fa-IR"
-      {% if category_names_arr.size > 0 %},
-      "keywords": {{ category_names_arr | join: ", " | jsonify }}
+      {% if keywords_str != "" %},
+      "keywords": {{ keywords_str | jsonify }}
       {% endif %}
     },
     {
